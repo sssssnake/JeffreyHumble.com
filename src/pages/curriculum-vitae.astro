@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+import Testimonials from "../components/Testimonials.astro";
+---
+<BaseLayout title="CV | View Expert CV Now" description="Explore Jeff Humble&#x27;s professional CV showcasing his experience in design, user experience, and consulting services with a focus on digital innovation.">
+  <Section theme="white" height="small" rows={{ mobile: 4, desktop: 5, scale: 0.0215 }}>
+    <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+      <Marquee items={["Curriculum Vitae"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+    </Block>
+
+    <Block m="1/1/2/11" d="5/1/6/27" z={4}>
+      <hr />
+    </Block>
+
+    <Block m="4/1/5/11" d="1/1/2/27" z={3} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+  </Section>
+
+  <Section theme="light-bold" height="medium" rows={{ mobile: 8, desktop: 29, scale: 0.0215 }}>
+    <Block m="1/2/7/10" d="1/2/28/26" z={1}>
+      <Img src="/images/f6d7dfc3-03cd-4bc3-871c-2cd6f95ac70f/JeffHumble_CV-Product.png" alt="A professional resume for Jeff Humble with a black and white photo, including sections for experience, education, volunteer work, contact info, areas of expertise, favorite tools, and languages, all organized in a clean, minimalist layout." fit="contain" width={595} height={842} />
+    </Block>
+
+    <Block m="7/2/9/6" d="28/7/30/21" z={2}>
+      <div class="btn-wrap" style="text-align:center"><a class="btn" href="/s/JeffHumble_CV-Product.pdf" target="_blank" rel="noopener">Download PDF of Jeff&#x27;s CV</a></div>
+    </Block>
+  </Section>
+
+  <Testimonials theme="white" minHeight="75vh" padding="0vmax" items={[
+    {
+      "quote": "\"I hired Jeff Humble in June of 2011. He was my first full-time hire to the design and user experience team at Mass Relevance...Over the few short years, he grew tremendously as a designer and handled his work with integrity and maturity and was integral to our company's growth and success. I look forward to when we can work together again.\"",
+      "author": "-Eric Freedman, Vice President of Product Innovation",
+      "image": "/images/d25f2320-561e-453e-a7a5-b4522fd92ac3/Background5.jpg"
+    },
+    {
+      "quote": "\"I speak for all of us when I say: we all took more than just 'something' from your workshop. I appreciate you were flexible within our budget as well as our time resources.\"",
+      "author": "-Nicole H., Senior Product Owner",
+      "image": "/images/6050255f-7f3d-4719-82a9-c9cf893189ab/Background2.jpg"
+    },
+    {
+      "quote": "\"While we worked together, Jeff designed and developed incredible digital experiences for Fortune 500 brands as well as major media companies...Jeff is smart, incredibly talented, collaborative, and is liked by all of his peers. Any employer should consider him/herself lucky to have him on their staff.\"",
+      "author": "-Elizabeth Winkler, Senior Product Manager",
+      "image": "/images/3e723c96-91f7-45c0-ba56-37f211da0a06/Background3.jpg"
+    },
+    {
+      "quote": "\"Jeff worked as my UX Design mentor at CareerFoundry...Jeff was always on hand to offer invaluable design advice. His wealth of knowledge about the tech industry never ceased to amaze me. He was always able to help me get unstuck whenever there were technical skills that needed extra explanation. I really can't recommend him enough, anyone would be lucky to have Jeff as a design mentor!\"",
+      "author": "-Anne Higgins, UX Designer & Author",
+      "image": "/images/14f9ae32-ac2a-41d3-85f7-6e00fe0907d8/Background1.jpg"
+    },
+    {
+      "quote": "\"Jeffrey was undoubtedly one of Spredfast's (formerly Mass Relevance) finest contributors, His unparalleled work ethic, ranks Jeffrey multiple notches above his peers. A true pioneer in the realm of online digital products, he willi be an amazing asset to whatever team has the opportunity to work with him next.\"",
+      "author": "Luke Fernandez, Product Manager",
+      "image": "/images/d41c52cb-8aa0-4a61-9689-7cf8155f2d9b/Background6.jpg"
+    },
+    {
+      "quote": "\"I just saw a talk Jeff did in 2022 about design strategy for Fountain Institute. It's a topic I feel very personally curious about...It turned out to be a fantastic primer that got my mind working and definitely helped pave the way for some further education in the topic. Thanks for that!\"",
+      "author": "-Nando Rossi, Senior Product Designer",
+      "image": "/images/b8f9e935-3018-459f-a173-046317ae067b/Background5.jpg"
+    },
+    {
+      "quote": "\"Jeff was responsible for designing a wide range of online digital products, which he did with thoughtfulness, enthusiasm and an attention to craft...Jeff was also an unselfish and supportive team member, collaborating well with designers and marketers alike - always willing to jump in and support others. Overall Jeff is an exceptional creative and would make a great addition to any team.\"",
+      "author": "-Ami Plasse, Creative Director",
+      "image": "/images/33784081-09e2-4cb4-9967-3c62325c8c4f/Background1.jpg"
+    }
+  ]} />
+</BaseLayout>

@@ -1,0 +1,5 @@
+# Search engines and AI assistants are welcome to read this site.
+User-agent: *
+Disallow: /api/
+
+Sitemap: https://www.jeffreyhumble.com/sitemap-index.xml

@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+import Testimonials from "../components/Testimonials.astro";
+---
+<BaseLayout title="Speaking &amp; Workshop Requests" description="Book Jeff for a talk or workshop at your conference or offsite・Experienced Speaker・Strategy・Product Innovation・UX Design・Experimentation">
+  <Section theme="white" height={15} rows={{ mobile: 4, desktop: 5, scale: 0.0215 }}>
+    <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+      <Marquee items={["Speaking & Workshop Requests"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+    </Block>
+
+    <Block m="1/1/2/11" d="5/1/6/27" z={4}>
+      <hr />
+    </Block>
+
+    <Block m="4/1/5/11" d="1/1/2/27" z={3} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+  </Section>
+
+  <Section theme="black" height={0} rows={{ mobile: 21, desktop: 28, scale: 0.0215 }} bgVideo="/media/VUI_talk_clip4.mp4">
+    <Block m="1/2/3/10" d="3/2/5/26" z={4} zm={3} valign="top">
+      <div class="rich text-block">
+        <h2 class="center">Book Jeff for a Talk or Workshop with this Request Form</h2>
+      </div>
+    </Block>
+
+    <Block m="3/2/19/10" d="5/9/21/19" z={3} zm={2} valign="top">
+      <ContactForm name="speaking-request" fields={[
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "name",
+          "required": true
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "name": "event_date",
+          "label": "Expected date of event",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "budget",
+          "label": "Expected budget",
+          "type": "text",
+          "required": true
+        }
+      ]} />
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 36, desktop: 16, scale: 0.0215 }}>
+    <Block m="1/3/4/9" d="1/7/4/21" z={0}>
+      <div class="rich text-block">
+        <h2 class="center">Examples of Past Engagements</h2>
+      </div>
+    </Block>
+
+    <Block m="4/2/5/10" d="3/1/17/27" z={3} valignM="middle" valign="top">
+      <hr />
+    </Block>
+
+    <Block m="5/2/11/10" d="5/2/12/10" z={4}>
+      <Img src="/images/1ee1f36b-a3a6-4685-bb98-9735a610cf0d/Leadership_Ateliers_Berlin.png" alt="A promotional banner for a leadership workshop featuring Jeff Humble, educator at The Fountain Institute in Berlin, with a blue and white color scheme, a black and white portrait of Jeff Humble, and the title &quot;Aligning with Strategy.&quot;" fit="contain" width={1512} height={1314} />
+    </Block>
+
+    <Block m="11/2/13/10" d="12/3/14/9" z={7} valign="top">
+      <div class="rich text-block">
+        <p class="center">Aligning with Strategy Masterclass at the Leadership Ateliers in Berlin</p>
+      </div>
+    </Block>
+
+    <Block m="13/4/15/8" d="14/3/16/9" z={10}>
+      <div class="btn-wrap" style="text-align:center"><a class="btn" href="https://leadershipateliers.com/courses/aligning-with-strategy" target="_blank" rel="noopener">Learn more</a></div>
+    </Block>
+
+    <Block m="16/2/22/10" d="5/10/12/18" z={5}>
+      <Img src="/images/ee97faf8-3d8d-4d8d-af0b-2ec24c22f7d4/What_is_design_strategy-live-Fountain_Institute.jpg" alt="Promotional graphic for a live online masterclass titled &#x27;What is design strategy?&#x27; with Jeff Humble, scheduled for Saturday, November 12, 2022. The design features black and white images of a man holding a compass, with event details in yellow and white text on a dark background." fit="contain" width={1920} height={1080} />
+    </Block>
+
+    <Block m="22/2/24/10" d="12/11/14/17" z={8} valign="top">
+      <div class="rich text-block">
+        <p class="center">What Is Design Strategy?  Masterclass at the Fountain Institute in Berlin</p>
+      </div>
+    </Block>
+
+    <Block m="24/4/26/8" d="14/11/16/17" z={11}>
+      <div class="btn-wrap" style="text-align:center"><a class="btn" href="https://www.thefountaininstitute.com/events/what-is-design-strategy" target="_blank" rel="noopener">Learn more</a></div>
+    </Block>
+
+    <Block m="27/2/33/10" d="5/18/12/26" z={6}>
+      <Img src="/images/5a826c26-58d8-4c9d-99f0-c25ef1a95fe6/ux_alive-berlin.png" alt="Black and white photo of Jeffrey Humble, Head of Design at CareerFoundry, with colorful text displaying his name and title, and a UX Alive! logo." fit="contain" width={1178} height={788} />
+    </Block>
+
+    <Block m="33/2/35/10" d="12/19/14/25" z={9} valign="top">
+      <div class="rich text-block">
+        <p class="center">The Future of Voice UI Main Stage Talk at UX Alive Conference in Istanbul</p>
+      </div>
+    </Block>
+
+    <Block m="35/4/37/8" d="14/19/16/25" z={12}>
+      <div class="btn-wrap" style="text-align:center"><a class="btn" href="https://youtu.be/QRNkD6O2vLA?si=T6gYtPyFLSFNZSEs" target="_blank" rel="noopener">Learn more</a></div>
+    </Block>
+  </Section>
+
+  <Testimonials theme="white" minHeight="30vh" padding="0vmax" items={[
+    {
+      "quote": "\"Thank you so much for doing the workshop with us. We found it really useful and you did an incredible job engaging and making it actionable for us.\"",
+      "author": "Ina Arnaoudova, Head of Design at Ecosia"
+    },
+    {
+      "quote": "\"I speak for all of us when I say: we all took more than just 'something' from your workshop.\"",
+      "author": "-Nicole H., Senior Product Owner at DeepC"
+    },
+    {
+      "quote": "\"Jeff is an excellent facilitator who made the learning process fun and impactful!\"",
+      "author": "Csenge Csog, UX/UI Designer"
+    },
+    {
+      "quote": "\"I just saw a talk Jeff did in 2022 about design strategy...It turned out to be a fantastic primer that got my mind working and definitely helped pave the way for some further education in the topic. Thanks for that!\"",
+      "author": "-Nando Rossi, Senior Product Designer"
+    },
+    {
+      "quote": "“I feel that I am in very competent hands with you. I regularly get the most updated information and experience in the UX field from you. That's a great feeling.”",
+      "author": "Shida Reher, User Experience Designer"
+    },
+    {
+      "quote": "“Valuable, up to date knowledge, presented and summarized clearly, without unnecessary fluff and bullsh*t.”",
+      "author": "Egon Becskei, UX Lead"
+    },
+    {
+      "quote": "Jeff has a rare ability to make complex concepts feel intuitive and actionable. His strategic thinking is exceptional...Beyond being highly knowledgeable, Jeff is a great facilitator: thoughtful, engaging, and effective.",
+      "author": "Stella Kalyva, UX & Product Designer"
+    }
+  ]} />
+</BaseLayout>

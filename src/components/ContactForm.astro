@@ -1,0 +1,120 @@
+---
+/*
+  A form that posts to /api/form (see worker/index.ts), which checks it for spam
+  and forwards it to the ActivePieces webhook, which pings Discord.
+  `name` tells the automation which form was used.
+*/
+export interface Field {
+  name: string;
+  label: string;
+  type: "text" | "email" | "textarea" | "date" | "name";
+  required?: boolean;
+}
+interface Props {
+  name: string;
+  fields: Field[];
+  submitLabel?: string;
+  successMessage?: string;
+  theme?: "light" | "dark";
+}
+const {
+  name,
+  fields,
+  submitLabel = "Contact Jeff",
+  successMessage = "Thank you! Jeff will get back to you soon.",
+  theme = "light",
+} = Astro.props;
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const uid = `f-${name.replace(/\W+/g, "-")}`;
+---
+<form class={`contact-form ${theme}`} data-form-name={name} novalidate>
+  {fields.map((f) =>
+    f.type === "name" ? (
+      <fieldset>
+        <legend>{f.label}</legend>
+        <div class="row">
+          <label>
+            <span>First Name {f.required && <small>(required)</small>}</span>
+            <input type="text" name="first_name" autocomplete="given-name" required={f.required} />
+          </label>
+          <label>
+            <span>Last Name {f.required && <small>(required)</small>}</span>
+            <input type="text" name="last_name" autocomplete="family-name" required={f.required} />
+          </label>
+        </div>
+      </fieldset>
+    ) : (
+      <label>
+        <span>{f.label} {f.required && <small>(required)</small>}</span>
+        {f.type === "textarea" ? (
+          <textarea name={f.name} rows="4" required={f.required} />
+        ) : (
+          <input type={f.type} name={f.name} required={f.required} autocomplete={f.type === "email" ? "email" : undefined} />
+        )}
+      </label>
+    )
+  )}
+  {/* Spam trap: people never see or fill this field, bots usually do. */}
+  <label class="hp" aria-hidden="true">Leave empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey}></div>}
+  <button class="btn" type="submit">{submitLabel}</button>
+  <p class="status" role="status" aria-live="polite" id={uid}></p>
+  <p class="success" hidden>{successMessage}</p>
+</form>
+{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("form.contact-form").forEach((form) => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLElement>(".status")!;
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+      button.disabled = true;
+      status.textContent = "Sending…";
+      const data = Object.fromEntries(new FormData(form).entries());
+      try {
+        const res = await fetch("/api/form", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ form: form.dataset.formName, page: location.pathname, ...data }),
+        });
+        if (!res.ok) throw new Error(await res.text());
+        form.querySelectorAll("fieldset, label, button, .cf-turnstile").forEach((el) => el.remove());
+        status.textContent = "";
+        form.querySelector<HTMLElement>(".success")!.hidden = false;
+      } catch {
+        status.textContent = "Sorry, that didn't send. Please try again, or message Jeff on LinkedIn.";
+        button.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact-form { display: grid; gap: 1rem; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  legend { padding: 0; margin-bottom: 0.4rem; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label { display: grid; gap: 0.4rem; }
+  label > span { font-size: 0.85rem; }
+  small { opacity: 0.7; font-size: 0.75em; }
+  input, textarea {
+    font: inherit;
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--black);
+  }
+  .dark input, .dark textarea { background: transparent; color: var(--white); }
+  textarea { resize: vertical; min-height: 6rem; }
+  button { justify-self: start; border: 0; cursor: pointer; }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  .hp { position: absolute; left: -9999px; }
+  .status:empty { display: none; }
+</style>

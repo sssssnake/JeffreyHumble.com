@@ -1,0 +1,156 @@
+/*
+  Global styles for jeffreyhumble.com.
+  Values here were measured from the Squarespace site (Oct 2026) so the port
+  matches it. Change a token below and it changes everywhere.
+*/
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
+}
+
+:root {
+  /* colors */
+  --black: #000;
+  --white: #fff;
+  --accent: hsl(5.62 65.57% 52.16%); /* the red: #d54435 */
+  --light-bg: hsl(60 4.35% 95.49%);
+  --text: #000;
+
+  /* type */
+  --font-heading: "Instrument Serif", Georgia, serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Squarespace scales type with screen width (1.2vw per step), capped at the 1400px max width */
+  --fs-unit: min(1.2vw, 16.8px);
+  --fs-h1: calc(3 * var(--fs-unit) + 1rem);    /* 4rem setting */
+  --fs-h2: calc(1.8 * var(--fs-unit) + 1rem);  /* 2.8rem */
+  --fs-h3: calc(1.2 * var(--fs-unit) + 1rem);  /* 2.2rem */
+  --fs-h4: calc(0.6 * var(--fs-unit) + 1rem);  /* 1.6rem */
+  --fs-large: calc(0.4 * var(--fs-unit) + 1rem); /* 1.4rem */
+  --fs-normal: 1rem;
+  --fs-small: 0.8rem;
+
+  /* layout */
+  --gutter: 6vw;
+  --max-width: 1400px;
+  --header-h: 76px;
+}
+@media (min-width: 768px) {
+  :root { --gutter: 2vw; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-normal);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video, iframe { max-width: 100%; }
+img { display: block; height: auto; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: var(--fs-h1); line-height: 1.4; }
+h2 { font-size: var(--fs-h2); line-height: 1.1; }
+h3 { font-size: var(--fs-h3); line-height: 1.14; }
+h4 { font-size: var(--fs-h4); line-height: 1.17; }
+
+p { margin: 0 0 1rem; }
+p:last-child { margin-bottom: 0; }
+.text-large, .text-large p { font-size: var(--fs-large); }
+.text-small, .text-small p { font-size: var(--fs-small); }
+
+a { color: var(--accent); }
+.rich a { color: var(--accent); }
+.rich ul, .rich ol { padding-left: 1.4em; margin: 0 0 1rem; }
+.rich li > p { margin: 0; }
+.rich blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+  border-left: 0;
+}
+.rich .highlight { background: var(--accent); color: var(--white); }
+
+hr {
+  border: 0;
+  border-top: 1px solid currentColor;
+  margin: 0;
+  width: 100%;
+}
+
+/* buttons */
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+  padding: 1rem 1.3rem;
+  border-radius: 300px;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.15s ease;
+}
+.btn:hover { opacity: 0.8; }
+.btn--small { font-size: 0.8rem; padding: 0.8rem 1.1rem; }
+/* on this theme "large" buttons render the same as medium */
+.btn--secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: calc(1rem - 1px) calc(1.3rem - 1px); }
+.btn--tertiary { background: transparent; color: inherit; border: 1px solid currentColor; }
+.theme-black .btn--secondary { color: var(--white); border-color: var(--white); }
+
+/* section themes */
+.theme-white { background-color: var(--white); color: var(--black); }
+.theme-light { background-color: var(--light-bg); color: var(--black); }
+.theme-black { background-color: var(--black); color: var(--white); }
+.theme-black a:not(.btn) { color: var(--white); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- blocks used by the converted pages ---------- */
+.text-block { width: 100%; }
+.text-block > :last-child { margin-bottom: 0; }
+.text-block.scaled { container-type: inline-size; }
+.text-block.scaled > * { font-size: calc(var(--scaled) * 1cqw); white-space: nowrap; }
+.center { text-align: center; }
+.right { text-align: right; }
+.accent { color: var(--accent); }
+.white { color: var(--white); }
+.black { color: var(--black); }
+.btn-wrap { width: 100%; }
+.img-link { display: block; width: 100%; height: 100%; }
+.caption { font-size: var(--fs-small); margin-top: 0.5rem; }
+.social-block :is(ul) { justify-content: center; }
+.rich h1:last-child, .rich h2:last-child, .rich h3:last-child, .rich h4:last-child { margin-bottom: 0; }

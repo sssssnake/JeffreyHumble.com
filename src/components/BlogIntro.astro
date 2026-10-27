@@ -1,0 +1,19 @@
+---
+import Section from "./Section.astro";
+import Block from "./Block.astro";
+import Img from "./Img.astro";
+import Marquee from "./Marquee.astro";
+---
+<Section theme="white" height={15} rows={{ mobile: 4, desktop: 5, scale: 0.0215 }}>
+  <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+    <Marquee items={["Jeff's Blog"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+  </Block>
+
+  <Block m="1/1/2/11" d="5/1/6/27" z={4}>
+    <hr />
+  </Block>
+
+  <Block m="4/1/5/11" d="1/1/2/27" z={3} valignM="middle" valign="bottom">
+    <hr />
+  </Block>
+</Section>

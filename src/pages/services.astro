@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import CalEmbed from "../components/CalEmbed.astro";
+import Marquee from "../components/Marquee.astro";
+---
+<BaseLayout title="Services" description="Book Jeff for a project・Product Innovation・Product Strategy・Product Discovery・Team Workshops・Product Training">
+  <Section theme="white" height={15} rows={{ mobile: 18, desktop: 27, scale: 0.0215 }}>
+    <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+      <Marquee items={["Consulting Services"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+    </Block>
+
+    <Block m="1/1/2/11" d="5/1/6/27" z={4}>
+      <hr />
+    </Block>
+
+    <Block m="4/1/5/11" d="1/1/2/27" z={3} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+
+    <Block m="5/2/7/10" d="10/18/20/24" z={6} valign="top">
+      <div class="rich text-block" style="background:var(--white);padding:6% 6% 6% 6%">
+        <h2 class="center"><span class="black">Menu of Services</span></h2><p class="center"><span class="black"><strong>Strategy Consulting</strong></span><br/><span class="black">Let Jeff improve your company’s strategy through research and collaborative sessions.</span></p><p class="center"><span class="black"><strong>Innovation Experiments</strong></span><br/><span class="black">Find new ways to innovate or have Jeff explore new directions.</span></p><p class="center"><span class="black"><strong>Corporate Workshops</strong></span><br/><span class="black">Help your team level up in AI, discovery, testing, or strategy.</span></p>
+      </div>
+    </Block>
+
+    <Block m="7/2/9/10" d="7/4/10/18" z={2}>
+      <div class="rich text-block">
+        <h2 class="center">Book a Consultation Call with Jeff.</h2>
+      </div>
+    </Block>
+
+    <Block m="9/2/17/10" d="10/4/24/18" z={5} valign="top">
+      <CalEmbed calLink="jeff-humble/consultation-call" />
+    </Block>
+
+    <Block m="17/2/19/10" d="25/4/27/18" z={3} valignM="middle" valign="bottom">
+      <div class="rich text-block">
+        <p class="center">If you’re not sure what it is you want, just book something. We can figure it out on the call.</p><p class="center">Prefer to write? Use the form in the footer ↓↓↓</p>
+      </div>
+    </Block>
+  </Section>
+</BaseLayout>

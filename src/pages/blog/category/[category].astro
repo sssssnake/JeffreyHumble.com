@@ -1,0 +1,22 @@
+---
+// Old Squarespace category pages: /blog/category/STRATEGY etc.
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogIntro from "../../../components/BlogIntro.astro";
+import PostList from "../../../components/PostList.astro";
+import { getPublishedPosts } from "../../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const cats = [...new Set(posts.flatMap((p) => p.data.categories))];
+  return cats.map((category) => ({
+    params: { category },
+    props: { category, posts: posts.filter((p) => p.data.categories.includes(category)) },
+  }));
+}
+const { category, posts } = Astro.props;
+const label = category.charAt(0) + category.slice(1).toLowerCase();
+---
+<BaseLayout title={`${label} posts`} description={`Jeff Humble's posts about ${label.toLowerCase()}.`}>
+  <BlogIntro />
+  <PostList posts={posts} />
+</BaseLayout>

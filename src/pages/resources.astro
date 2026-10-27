@@ -1,0 +1,289 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+import YouTube from "../components/YouTube.astro";
+---
+<BaseLayout title="Free Resources for Product People" description="Get free talks and templates on product innovation &amp; strategy topics from Jeff Humble">
+  <Section theme="white" height={15} rows={{ mobile: 5, desktop: 5, scale: 0.0215 }}>
+    <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+      <Marquee items={["Free Resources"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+    </Block>
+
+    <Block m="1/1/2/11" d="5/1/6/27" z={3} zm={2} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+
+    <Block m="4/1/5/11" d="1/1/2/27" z={4} zm={3}>
+      <hr />
+    </Block>
+  </Section>
+
+  <Section theme="white" height={1} rows={{ mobile: 1, desktop: 1, scale: 0.0215 }}>
+    <Block m="1/2/2/10" d="1/22/2/26" z={2} zm={4} valign="top">
+      <Fragment set:html={"<p id=\"talks\"></p>"} />
+    </Block>
+  </Section>
+
+  <Section theme="light" height="small" rows={{ mobile: 10, desktop: 12, scale: 0.0215 }}>
+    <Block m="1/2/7/10" d="1/6/13/14" z={4}>
+      <Img src="/images/eb06bd7b-69ba-468b-b2e2-65f633a5ff43/Strategy_Canvas-Asset_Preview.png" alt="Black and white strategy planning worksheet titled &#x27;Strategy Canvas&#x27; with a handshake graphic at the top, a hand holding a compass in the lower left, and a telescope on the right, set against a green starburst background." fit="contain" width={1080} height={1080} />
+    </Block>
+
+    <Block m="7/2/9/10" d="3/14/7/21" z={2} valignM="top">
+      <div class="rich text-block">
+        <h3>Strategy Process Canvas</h3><p>Design strategy based on insights in 9 easy steps so you can lead with vision.</p>
+      </div>
+    </Block>
+
+    <Block m="9/2/11/6" d="7/14/9/21" z={3}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn btn--large btn--secondary" href="https://www.thefountaininstitute.com/strategy-canvas" target="_blank" rel="noopener">Get the Template</a></div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 11, scale: 0.0215 }}>
+    <Block m="1/2/7/10" d="1/6/12/14" z={4}>
+      <Img src="/images/cd25d596-4d36-497c-8592-51fe27c0dff3/Experiment_Cards-Asset_Preview.png" alt="An image displaying two scientific worksheet forms, one labeled &#x27;Experiment Card&#x27; and the other &#x27;Analysis Card,&#x27; with a pair of hands holding a test tube and a pen between the forms, set against a red starburst background." fit="contain" width={1080} height={1080} />
+    </Block>
+
+    <Block m="7/2/9/10" d="3/14/7/21" z={2} valignM="top">
+      <div class="rich text-block">
+        <h3>Experiment Cards Template</h3><p>Turn product ideas into product experiments with these advanced experiment design cards.</p>
+      </div>
+    </Block>
+
+    <Block m="9/2/11/6" d="7/14/9/21" z={3}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn btn--large btn--secondary" href="https://www.thefountaininstitute.com/experiment-cards" target="_blank" rel="noopener">Get the Template</a></div>
+    </Block>
+  </Section>
+
+  <Section theme="light" height="small" rows={{ mobile: 10, desktop: 12, scale: 0.0215 }}>
+    <Block m="1/2/7/10" d="1/6/13/14" z={4}>
+      <Img src="/images/2a091d90-983f-486c-b049-c5426bea9189/Insight_Card-Asset_Preview.png" alt="A framed insight card on a computer screen, accompanied by a hand writing, a vintage lens with an eye symbol, set against a blue starburst background with small sparkles." fit="contain" width={1080} height={1080} />
+    </Block>
+
+    <Block m="7/2/9/10" d="3/14/7/21" z={2} valignM="top">
+      <div class="rich text-block">
+        <h3>Research Insight Template</h3><p>Capture and share your user insights visually with this tool for Miro or Figjam.</p>
+      </div>
+    </Block>
+
+    <Block m="9/2/11/6" d="7/14/9/21" z={3}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn btn--large btn--secondary" href="https://www.thefountaininstitute.com/insight-card" target="_blank" rel="noopener">Get the Template</a></div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 12, scale: 0.0215 }}>
+    <Block m="1/2/7/10" d="1/6/13/14" z={4}>
+      <Img src="/images/8174d26b-e1c1-45f6-bce1-4f489d88c618/Free_Brag_Doc_Template-Asset_Preview.png" alt="A digital graphic featuring a Notion page titled &#x27;Brag Doc&#x27;, with a stick figure climbing a ladder on the left, and a hand drawing or pointing at the page, all set against a green starburst background with sparkles." fit="contain" width={1080} height={1080} />
+    </Block>
+
+    <Block m="7/2/9/10" d="3/14/7/21" z={2} valignM="top">
+      <div class="rich text-block">
+        <h3>Brag Doc Template in Notion</h3><p>Keep track of your career wins in Notion so you’re always ready to prove your value.</p>
+      </div>
+    </Block>
+
+    <Block m="9/2/11/6" d="7/14/9/21" z={3}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn btn--large btn--secondary" href="https://www.thefountaininstitute.com/brag-doc-template-notion" target="_blank" rel="noopener">Get the Template</a></div>
+    </Block>
+  </Section>
+
+  <Section theme="black" height={0} rows={{ mobile: 16, desktop: 14, scale: 0.0215 }}>
+    <Block m="2/2/8/10" d="3/7/13/13" z={6} zm={5}>
+      <a class="img-link" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6918133098740109312"><Img src="/images/26f8e482-499e-401a-83fb-c8fd062432b3/Jeffs_Newsletter-small.gif" alt="Jeff&#x27;s Newsletter" fit="cover" width={1080} height={1080} clip="M0.495,0 A0.505,0.336,0,0,0,0,0.329 V1 H1 V0.329 A0.505,0.336,0,0,0,0.495,0" /></a>
+    </Block>
+
+    <Block m="9/3/11/9" d="5/13/8/21" z={1} zm={2} valignM="top" valign="bottom">
+      <div class="rich text-block">
+        <h2>Jeff’s Newsletter</h2>
+      </div>
+    </Block>
+
+    <Block m="11/3/14/9" d="8/13/10/22" z={3} valignM="top">
+      <div class="rich text-block">
+        <p class="text-large">A monthly advice letter for product makers</p><p>Trusted by 7,000+ subscribers</p>
+      </div>
+    </Block>
+
+    <Block m="14/3/16/9" d="10/13/12/21" z={2} zm={4}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6918133098740109312" target="_blank" rel="noopener">Subscribe on Linkedin</a></div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="8Rt_HP-v7QQ" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>UX Strategy Info Session</h3><p>An intro to UX strategy with a case study from Nintendo</p><p><em>Talk given online for the Fountain Institute on September 17, 2025</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 12, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="pcaNXUNgZGA" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/7/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>How to Design a UX Strategy</h3><p>A series of short videos for UX pros who want to lead by researching, designing, and testing strategy in their design organization.</p><p><em>Based on a talk given online for the Fountain Institute on June 8, 2022</em></p>
+      </div>
+    </Block>
+
+    <Block m="11/2/13/6" d="7/15/9/24" z={3}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn btn--large btn--secondary" href="https://www.youtube.com/playlist?list=PLmcEbkeP62t77hwOuLHfiq59HEA5D1AOP" target="_blank" rel="noopener">Watch the Playlist on YouTube</a></div>
+    </Block>
+  </Section>
+
+  <Section theme="light" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="igiez2x4D2Q" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>How to Do UX Research Weekly</h3><p>A 60-minute masterclass for UX pros who want to find time for continuous discovery in their design process.</p><p><em>Talk given online for the Fountain Institute on January 26, 2022</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="S_kVxX9BMlg" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>How to Lead with UX Metrics</h3><p><em>Learn how to measure the user experience like a pro in this 60-minute masterclass by Jeff Humble.</em></p><p><em>Talk given online for the Fountain Institute on September 10, 2022</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="light" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="qujI-uZ7HlU" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>How to Design Product Experiments</h3><p>Learn how to build an experiment-driven approach to product design that will test big ideas and tackle product risks upfront.</p><p><em>Talk given online for the Fountain Institute on February 26, 2022</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="BMlaKjZ4LTk" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>The UX of Online Learning</h3><p>Learn how to learn better and design better user experiences when your product is a learning experience.</p><p><em>Talk given online for the Fountain Institute on June 17, 2021</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="light" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="QRNkD6O2vLA" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/23" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>The Future of Voice UI</h3><p>Learn how voice interfaces are changing to become more human and where that may lead in the next decade.</p><p><em>Talk given in-person UX Alive Conference on May 8, 2018</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="zjNIE6i2LsU" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>What is design strategy?</h3><p>Learn the 4 ways that designers can lead through strategy in various roles and positions in an organization.</p><p><em>Talk given online for the Fountain Institute on November 12, 2022</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="black" height={0} rows={{ mobile: 21, desktop: 20, scale: 0.0215 }} bgVideo="/media/VUI_talk_clip4.mp4">
+    <Block m="1/2/3/10" d="3/2/5/26" z={4} zm={3} valign="top">
+      <div class="rich text-block">
+        <h2 class="center">Book Jeff for a Talk or Workshop with this Request Form</h2>
+      </div>
+    </Block>
+
+    <Block m="3/2/19/10" d="5/9/21/19" z={3} zm={2} valign="top">
+      <ContactForm name="speaking-request" fields={[
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "name",
+          "required": true
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "name": "event_date",
+          "label": "Expected date of event",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "budget",
+          "label": "Expected budget",
+          "type": "text",
+          "required": true
+        }
+      ]} />
+    </Block>
+  </Section>
+
+  <Section theme="light" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="aAISx0FsPxs" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>Unlock Your Team’s Research Potential</h3><p>Learn how to think about traditional and continuous research so you can take your team’s research operations to the next level.</p><p><em>Talk given online for the Fountain Institute on January 12, 2023</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height="small" rows={{ mobile: 10, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/9/10" d="1/1/11/14" z={1} valign="top">
+      <YouTube id="21e2f15GyAk" />
+    </Block>
+
+    <Block m="9/2/11/10" d="1/15/5/24" z={2} valign="top">
+      <div class="rich text-block">
+        <h3>How to Test Innovation Ideas</h3><p>Learn the process behind innovation testing being used at the most innovative companies. </p><p><em>Talk given online for the Fountain Institute on February 24, 2023</em></p>
+      </div>
+    </Block>
+  </Section>
+
+  <Section theme="white" height={1} rows={{ mobile: 1, desktop: 1, scale: 0.0215 }}>
+    <Block m="1/2/2/10" d="1/22/2/26" z={2} zm={4} valign="top">
+      <Fragment set:html={"<p id=\"templates\"></p>"} />
+    </Block>
+  </Section>
+</BaseLayout>

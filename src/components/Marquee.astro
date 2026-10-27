@@ -1,0 +1,78 @@
+---
+/*
+  Scrolling text, like Squarespace's marquee block.
+  size is in rem (Squarespace's "font size" setting). wave = 0 scrolls in a
+  straight line; above 0 the text rides a wave.
+*/
+interface Props {
+  items: string[];
+  textStyle?: "heading-1" | "heading-2" | "heading-3" | "heading-4" | "paragraph-1" | "paragraph-2" | "paragraph-3";
+  size?: number;
+  speed?: number; // Squarespace's 0..1 setting
+  direction?: "left" | "right";
+  wave?: number; // intensity 0..100
+  waveFrequency?: number;
+  href?: string;
+}
+const { items, textStyle = "heading-1", size, speed = 0.5, direction = "left", wave = 0, waveFrequency = 4, href } = Astro.props;
+
+const isHeading = textStyle.startsWith("heading");
+const fallback: Record<string, number> = { "heading-1": 4, "heading-2": 2.8, "heading-3": 2.2, "heading-4": 1.6, "paragraph-1": 1.4, "paragraph-2": 1, "paragraph-3": 0.8 };
+const rem = size ?? fallback[textStyle] ?? 1;
+const px = rem * 16;
+const text = items.join("   ") + "   ";
+const seconds = Math.round(30 / Math.max(speed, 0.05));
+
+// wave geometry in px (the SVG is drawn 1:1 on screen)
+const W = 4000;
+const amp = (wave / 100) * px * 0.6;
+const H = Math.round(px * 1.6 + amp * 2);
+const mid = H / 2 + px * 0.3;
+const wavelength = (1600 * 4) / Math.max(waveFrequency, 1);
+let d = `M ${-W} ${mid.toFixed(1)}`;
+for (let x = -W; x <= W * 2; x += 20) {
+  d += ` L ${x} ${(mid + Math.sin((x / wavelength) * Math.PI * 2) * amp).toFixed(1)}`;
+}
+const pathId = `wave-${Math.random().toString(36).slice(2, 8)}`;
+const repeated = Array.from({ length: Math.ceil((W * 3) / (text.length * px * 0.45)) + 2 }, () => text).join("");
+const Tag = href ? "a" : "div";
+const shift = Math.round(text.length * px * 0.45);
+---
+<Tag class={`marquee ${isHeading ? "is-heading" : ""}`} href={href} style={`--size:${rem > 2 ? `max(2rem, min(${rem}rem, ${(rem * 1600) / 1280}vw))` : `${rem}rem`};--dur:${seconds}s`} aria-label={items.join(", ")}>
+  {wave > 0 ? (
+    <svg class="wave" viewBox={`0 0 ${W} ${H}`} height={H} preserveAspectRatio="xMinYMid slice" aria-hidden="true">
+      <path id={pathId} d={d} fill="none" />
+      <text style={`font-size:${px}px`}>
+        <textPath href={`#${pathId}`}>
+          {repeated}
+          <animate attributeName="startOffset" from={direction === "left" ? "0" : `-${W}`} to={direction === "left" ? `-${W}` : "0"} dur={`${seconds * 3}s`} repeatCount="indefinite" />
+        </textPath>
+      </text>
+    </svg>
+  ) : (
+    <div class={`track ${direction}`} aria-hidden="true">
+      <span>{text}{text}{text}{text}{text}{text}</span>
+      <span>{text}{text}{text}{text}{text}{text}</span>
+    </div>
+  )}
+</Tag>
+
+<style>
+  .marquee {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    font-size: var(--size);
+    line-height: 1.2;
+    white-space: pre;
+    padding: 0.15em 0;
+  }
+  .is-heading { font-family: var(--font-heading); }
+  .track { display: flex; width: max-content; animation: marquee var(--dur) linear infinite; }
+  .track.right { animation-direction: reverse; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  .wave { display: block; width: 100%; overflow: visible; }
+  .wave text { fill: currentColor; font-family: var(--font-heading); }
+</style>

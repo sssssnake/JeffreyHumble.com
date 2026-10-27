@@ -1,0 +1,37 @@
+---
+/* An image that fills its grid cell, like Squarespace's image block.
+   fit="cover" crops to fill; fit="contain" shows the whole image. */
+interface Props {
+  src: string;
+  alt?: string;
+  fit?: "cover" | "contain";
+  position?: string;
+  width?: number;
+  height?: number;
+  eager?: boolean;
+  /** optional mask shape, as an SVG path in 0..1 units (e.g. an arch) */
+  clip?: string;
+}
+const { src, alt = "", fit = "cover", position = "50% 50%", width, height, eager = false, clip } = Astro.props;
+const clipId = clip ? `clip-${Math.abs([...clip].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)).toString(36)}` : undefined;
+---
+{clip && (
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <clipPath id={clipId} clipPathUnits="objectBoundingBox"><path d={clip} /></clipPath>
+  </svg>
+)}
+<img
+  class={`img img--${fit}`}
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={eager ? "eager" : "lazy"}
+  decoding="async"
+  style={`object-position:${position}${clipId ? `;clip-path:url(#${clipId})` : ""}`}
+/>
+<style>
+  .img { width: 100%; height: 100%; display: block; }
+  .img--cover { object-fit: cover; }
+  .img--contain { object-fit: contain; }
+</style>

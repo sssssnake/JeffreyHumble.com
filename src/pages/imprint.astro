@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+---
+<BaseLayout title="Imprint" description="Legal information for Jeff Humble">
+  <Section theme="white" height={15} rows={{ mobile: 4, desktop: 5, scale: 0.0215 }}>
+    <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+      <Marquee items={["Imprint"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+    </Block>
+
+    <Block m="1/1/2/11" d="5/1/6/27" z={4}>
+      <hr />
+    </Block>
+
+    <Block m="4/1/5/11" d="1/1/2/27" z={3} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+  </Section>
+
+  <Section theme="white" height="medium" rows={{ mobile: 10, desktop: 30, scale: 0.0215 }}>
+    <Block m="1/2/3/10" d="1/14/8/20" z={1} valignM="top">
+      <div class="rich text-block">
+        <h2>Freelancing Info</h2><p>Jeffrey Humble<br/>bei Huhn<br/>Südwestkorso 6<br/>12161 Berlin<br/>Deutschland<br/><br/>Tel: +49 17674696661<br/>VAT-ID: DE334424725</p>
+      </div>
+    </Block>
+
+    <Block m="3/2/5/10" d="10/8/31/20" z={2} valign="top">
+      <div class="rich text-block">
+        <h2>Disclaimer (exclusion of liability)</h2><h4>1. Liability for content</h4><p>As a service provider, we are responsible for our own content on these pages in accordance with general law in accordance with Section 7 (1) TMG. According to §§ 8 to 10 TMG, as a service provider, we are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information according to general laws remain unaffected. Liability in this regard is only possible from the point in time at which we become aware of a specific legal violation. As soon as we become aware of such legal violations, we will remove this content immediately.</p><h4>2. Liability for links</h4><p>This website contains links to external third-party websites, the content of which cannot be influenced. Therefore, no guarantee can be given for this external content. The respective provider or operator of the pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time they were linked. No illegal content was found at the time the link was created. A permanent monitoring of the content of the linked pages is not reasonable without concrete evidence of a violation of the law. If we become aware of legal violations, such links will be removed immediately from this website to the illegal website.</p><h4>3. Copyright</h4><p>The content and works on these pages created by the service providers, their employees, and commissioned third parties are subject to German copyright law. The reproduction, processing, distribution, and any kind of exploitation outside the limits of copyright require the prior written consent of the respective author or creator. Downloads and copies of this website are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are observed. In particular contents of third parties are marked as such. Should you nevertheless become aware of a copyright infringement, we would ask you to notify us accordingly. If we become aware of legal violations, such content will be removed immediately.</p>
+      </div>
+    </Block>
+
+    <Block m="5/2/11/10" d="1/8/7/14" z={3}>
+      <Img src="/images/ae6342c5-2c90-44dc-aae4-8c97b113085a/Jeff_Humble_favicon.png" alt="Computer monitor displaying an online profile of Jeff Humble with a background of blue sky and white clouds." fit="contain" width={200} height={200} />
+    </Block>
+  </Section>
+</BaseLayout>

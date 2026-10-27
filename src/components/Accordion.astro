@@ -1,0 +1,35 @@
+---
+interface Props { items: { title: string; html: string }[]; large?: boolean }
+const { items, large = false } = Astro.props;
+---
+<div class={`accordion ${large ? "large" : ""}`}>
+  {items.map((item) => (
+    <details>
+      <summary>{item.title}<span class="icon" aria-hidden="true"></span></summary>
+      <div class="rich desc" set:html={item.html} />
+    </details>
+  ))}
+</div>
+<script>
+  // only one item open at a time, like the original
+  document.querySelectorAll(".accordion").forEach((acc) => {
+    acc.querySelectorAll("details").forEach((d) =>
+      d.addEventListener("toggle", () => {
+        if (d.open) acc.querySelectorAll("details").forEach((o) => o !== d && (o.open = false));
+      })
+    );
+  });
+</script>
+<style>
+  .accordion { border-top: 1px solid currentColor; width: 100%; }
+  details { border-bottom: 1px solid currentColor; }
+  summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 0; gap: 1rem;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .large summary { font-size: var(--fs-large); }
+  .icon { width: 10px; height: 10px; border-right: 1px solid; border-bottom: 1px solid; rotate: 45deg; translate: 0 -3px; transition: rotate .2s; flex: none; }
+  details[open] .icon { rotate: 225deg; translate: 0 3px; }
+  .desc { padding-bottom: 1.2rem; }
+</style>

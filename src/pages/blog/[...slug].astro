@@ -1,0 +1,80 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPublishedPosts, postPath, monthDay, type Post } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post, i) => ({
+    params: { slug: postPath(post).replace(/^\/blog\//, "") },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props { post: Post; newer?: Post; older?: Post }
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const { title, date, excerpt, image, seoTitle, seoDescription } = post.data;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  datePublished: date.toISOString(),
+  author: { "@type": "Person", name: "Jeff Humble", url: "https://www.jeffreyhumble.com/about" },
+  image: image ? new URL(image, "https://www.jeffreyhumble.com").href : undefined,
+  description: excerpt,
+  mainEntityOfPage: new URL(postPath(post), "https://www.jeffreyhumble.com").href,
+};
+---
+<BaseLayout title={seoTitle ?? title} description={seoDescription ?? excerpt} image={image} type="article" published={date}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <article class="post">
+    <header>
+      <h1>{title}</h1>
+      <p class="meta"><time datetime={date.toISOString()}>{monthDay(date)}</time> <span>•</span> Written By Jeff Humble</p>
+    </header>
+    <div class="rich body">
+      <Content />
+    </div>
+    <footer class="post-footer">
+      <div class="author">
+        <img src="/images/avatar/Jeff-avatar.jpg" alt="" width="80" height="80" loading="lazy" />
+        <div>
+          <p class="name">Jeff Humble</p>
+          <p>Jeff Humble is a designer, strategist, and educator from the U.S. who lives in Berlin. He teaches strategic design and innovation at the <a href="https://www.thefountaininstitute.com">Fountain Institute</a>. Visit <a href="/">jeffreyhumble.com</a> to learn more about Jeff.</p>
+        </div>
+      </div>
+      <nav class="pager" aria-label="More posts">
+        {newer ? <a class="newer" href={postPath(newer)}><small>Previous</small><span>{newer.data.title}</span></a> : <span />}
+        {older ? <a class="older" href={postPath(older)}><small>Next</small><span>{older.data.title}</span></a> : <span />}
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .post { max-width: calc(614px + var(--gutter) * 2); margin: 0 auto; padding: 1.5rem var(--gutter) 6rem; }
+  header { text-align: center; margin-bottom: 2.5rem; }
+  h1 { font-size: var(--fs-h1); line-height: 1.2; margin-bottom: 1.5rem; }
+  .meta span { margin: 0 0.5em; }
+  .body :global(img) { width: 100%; margin: 2rem 0 1rem; }
+  .body :global(> img:first-child), .body :global(> p:first-child > img) { margin-top: 0; }
+  .body :global(h2) { margin-top: 2.5rem; }
+  .body :global(h3) { margin-top: 2rem; }
+  .body :global(h4) { margin-top: 1.5rem; }
+  .body :global(.center) { text-align: center; }
+  .body :global(.video) { position: relative; aspect-ratio: 16 / 9; margin: 2rem 0; }
+  .body :global(.video iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .body :global(.gallery) { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.6rem; margin: 2rem 0; }
+  .body :global(.gallery img) { margin: 0; aspect-ratio: 1; object-fit: cover; }
+  .post-footer { margin-top: 4rem; }
+  .author { display: flex; gap: 1.5rem; align-items: flex-start; padding: 2rem 0; border-top: 1px solid; border-bottom: 1px solid; }
+  .author img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; flex: none; }
+  .author .name { font-family: var(--font-heading); font-size: var(--fs-h4); margin-bottom: 0.5rem; }
+  .pager { display: flex; justify-content: space-between; gap: 2rem; margin-top: 2.5rem; }
+  .pager a { color: inherit; text-decoration: none; display: grid; gap: 0.3rem; max-width: 45%; }
+  .pager a:hover span { opacity: 0.7; }
+  .pager .older { text-align: right; }
+  .pager small { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .pager span { font-family: var(--font-heading); font-size: var(--fs-h4); line-height: 1.2; }
+</style>

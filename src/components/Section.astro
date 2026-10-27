@@ -1,0 +1,76 @@
+---
+/*
+  A page section laid out on the same grid Squarespace used, so the port looks
+  the same: 8 columns on phones, 24 on desktop, with each <Block> placed by
+  row/column. See Block.astro.
+*/
+interface Props {
+  theme?: "white" | "light" | "light-bold" | "black" | "";
+  /** small | medium | large, or Squarespace's custom 0-100 value (padding of value/10 % of screen width) */
+  height?: "small" | "medium" | "large" | number;
+  rows: { mobile: number; desktop: number; scale?: number };
+  bg?: string;
+  bgVideo?: string;
+  overlay?: number;
+  id?: string;
+}
+const { theme = "white", height = "small", rows, bg, bgVideo, overlay = 0, id } = Astro.props;
+const pad = typeof height === "number" ? `${height / 10}vw` : { small: "3.3vw", medium: "6.6vw", large: "10vw" }[height];
+const style = [
+  `--pad:${pad}`,
+  `--rows-m:${rows.mobile}`,
+  `--rows-d:${rows.desktop}`,
+  `--row-scale:${rows.scale ?? 0.0215}`,
+  `--overlay:${overlay}`,
+].join(";");
+---
+<section class={`section theme-${theme || "white"}`} style={style} id={id}>
+  {(bg || bgVideo) && (
+    <div class="bg" aria-hidden="true">
+      {bgVideo ? (
+        <video src={bgVideo} autoplay muted loop playsinline poster={bg}></video>
+      ) : (
+        <img src={bg} alt="" loading="lazy" decoding="async" />
+      )}
+      {overlay > 0 && <div class="overlay"></div>}
+    </div>
+  )}
+  <div class="grid">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    position: relative;
+    padding: var(--pad) 0;
+    overflow: hidden;
+  }
+  .bg { position: absolute; inset: 0; z-index: 0; }
+  .bg img, .bg video { width: 100%; height: 100%; object-fit: cover; }
+  .overlay { position: absolute; inset: 0; background: var(--section-bg, #fff); opacity: var(--overlay); }
+  .theme-black .overlay { background: #000; }
+  .theme-light .overlay { background: var(--light-bg); }
+  .theme-light-bold { background: var(--light-bg); }
+
+  .grid {
+    --gap: 11px;
+    --gutter-col: calc(6vw - var(--gap));
+    --cell: calc((var(--max-width) - var(--gap) * 7) / 8);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(var(--gutter-col), 1fr) repeat(8, minmax(0, var(--cell))) minmax(var(--gutter-col), 1fr);
+    grid-template-rows: repeat(var(--rows-m), minmax(24px, auto));
+    gap: var(--gap);
+  }
+  @media (min-width: 768px) {
+    .grid {
+      --gutter-col: calc(2vw - var(--gap));
+      --cell: calc((var(--max-width) - var(--gap) * 23) / 24);
+      --container: min(var(--max-width), calc(100vw - 4vw));
+      grid-template-columns: minmax(var(--gutter-col), 1fr) repeat(24, minmax(0, var(--cell))) minmax(var(--gutter-col), 1fr);
+      grid-template-rows: repeat(var(--rows-d), minmax(calc(var(--container) * var(--row-scale)), auto));
+    }
+  }
+</style>

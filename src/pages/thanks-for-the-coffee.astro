@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+---
+<BaseLayout title="Thanks for the coffee! | Discover Expert Consulting Today" description="Explore Jeff Humble&#x27;s consulting services, resources, and strategy course to enhance your business growth and success.">
+  <Section theme="light" height="medium" rows={{ mobile: 14, desktop: 12, scale: 0.0215 }}>
+    <Block m="1/1/7/11" d="1/1/8/27" z={3} zm={4}>
+      <Marquee items={["Thank you"]} textStyle="heading-1" speed={0.5} direction="left" size={8} wave={60} waveFrequency={2} />
+    </Block>
+
+    <Block m="6/2/12/10" d="1/9/9/18" z={4} zm={2}>
+      <Img src="/images/aa6b2bc3-e570-4997-89da-ce092d102993/Jeff-PhotoFunia.jpg" alt="A barista is pouring steamed milk into a cup of espresso to create latte art with a face, with a hand holding the cup and a blurred dark background." fit="contain" width={1200} height={800} />
+    </Block>
+
+    <Block m="12/2/15/10" d="9/5/13/23" z={3} valignM="top">
+      <div class="rich text-block">
+        <h2 class="center">Mmmm, now that’s some yummy bean juice.<br/>Thanks so much!</h2><p class="center"><a href="https://photofunia.com/categories/all_effects/latte-art">Make your own latte art with Photofunia</a></p>
+      </div>
+    </Block>
+  </Section>
+</BaseLayout>

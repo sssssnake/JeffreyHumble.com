@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import Accordion from "../components/Accordion.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+---
+<BaseLayout title="About" description="Learn more  about Jeffrey Humble・American Product Strategist &amp; Educator・Working in Product Innovation &amp; Strategy in Berlin, Germany">
+  <Section theme="white" height={15} rows={{ mobile: 4, desktop: 5, scale: 0.0215 }}>
+    <Block m="1/1/5/11" d="1/1/6/27" z={1} valignM="middle" valign="top">
+      <Marquee items={["About"]} textStyle="heading-1" speed={0.5} direction="left" size={8} />
+    </Block>
+
+    <Block m="1/1/2/11" d="5/1/6/27" z={3} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+
+    <Block m="4/1/5/11" d="1/1/2/27" z={4}>
+      <hr />
+    </Block>
+  </Section>
+
+  <Section theme="white" height="medium" rows={{ mobile: 57, desktop: 27, scale: 0.0215 }}>
+    <Block m="1/2/16/10" d="1/14/28/26" z={1} valignM="middle" valign="top">
+      <Img src="/images/6876f5df-237a-4383-afb2-e527bc0adb54/Utopian_Scholastic_About_Jeff.jpg" alt="about page designer" fit="contain" width={1288} height={1988} />
+    </Block>
+
+    <Block m="16/2/17/10" d="1/3/2/14" z={19} zm={16} valignM="middle" valign="bottom">
+      <hr />
+    </Block>
+
+    <Block m="17/2/31/10" d="2/3/10/14" z={2} zm={3} valignM="middle" valign="top">
+      <div class="rich text-block">
+        <p class="text-large">Hallo! I’m Jeff, an innovation designer &amp; founder from the U.S.</p><p class="text-large">You’ll find me working on projects that make a real impact and where people trust each other to do big things.</p><p class="text-large">I continually seek ways to bridge customers and business with an ever-growing set of strategic skills. I’ve led international product teams, started my own online school, and helped dozens of clients design amazing strategies.</p><p class="text-large"><strong>If your startup is looking for corporate workshops or consulting, </strong><a href="/services" rel="noopener" target="_blank"><strong>let’s talk</strong></a><strong>!</strong></p>
+      </div>
+    </Block>
+
+    <Block m="31/2/32/10" d="10/3/11/14" z={20} zm={17} valignM="middle" valign="top">
+      <hr />
+    </Block>
+
+    <Block m="32/2/55/10" d="11/3/27/14" z={6} zm={4}>
+      <div class="rich text-block">
+        <p>I started my career in Austin, Texas, back in 2009, after graduating with a degree in design. Since then, I’ve been on a quest to learn the entire process behind human-centered products. I have a diverse history of leadership and have worked as an <strong>innovation designer, head of design, and founder</strong> at three profitable startups. </p><p>In my previous role as Head of Design at <a href="https://careerfoundry.com/" rel="noopener" target="_blank">CareerFoundry</a>, I helped thousands of people secure their first UX/UI design job. I helped design their learning platform, built the design team from scratch, and helped scale the team to profitability in 2019.</p><p>I coach designers in innovation and strategy skills at <a href="https://www.thefountaininstitute.com" rel="noopener" target="_blank">The Fountain Institute</a>, a company I co-founded in 2020. Lately, I have <strong>done workshops for UX &amp; product teams</strong> like <a href="https://www.ecosia.org/" rel="noopener" target="_blank">Ecosia</a> &amp; <a href="https://www.leanix.net/en/" rel="noopener" target="_blank">LeanIX</a>.</p><p>I’m a big reader, and you can see some of my favorites in the collage on this page. I’m always looking for ways to turn interests into projects through writing, workshops, or building a product with AI. </p><p>I give back to the community through <a href="/resources" target="">free design resources</a> on the Fountain Institute’s website. I share resources and do free talks based on the work I do in teaching and coaching.</p><p>I post daily on <a href="https://www.linkedin.com/in/jeff-humble/" rel="noopener" target="_blank">Linkedin</a>, so add me and say hi!</p><p>💼 Consulting: <a href="/services">jeffreyhumble.com/services</a><br/>🗣️Speaking: <a href="/speaking-requests" target="">jeffreyhumble.com/speaking-requests</a><br/>⛲️ Company: <a href="https://www.thefountaininstitute.com" rel="noopener" target="_blank">thefountaininstitute.com</a></p>
+      </div>
+    </Block>
+
+    <Block m="55/2/56/10" d="27/3/28/14" z={21} zm={18} valignM="middle" valign="top">
+      <hr />
+    </Block>
+  </Section>
+
+  <Section theme="white" height={0} rows={{ mobile: 17, desktop: 10, scale: 0.0215 }}>
+    <Block m="1/2/7/10" d="1/5/8/12" z={5} zm={4} valignM="middle" valign="top">
+      <Img src="/images/09a42028-368d-4747-9850-d5582af014d2/3-pillars_emoji.png" alt="Jeff Humble skills" fit="contain" width={403} height={307} />
+    </Block>
+
+    <Block m="8/2/10/10" d="1/14/3/25" z={2} zm={1} valign="top">
+      <div class="rich text-block">
+        <h2>The 3 Pillars of Jeff’s Practice</h2>
+      </div>
+    </Block>
+
+    <Block m="10/2/18/10" d="3/14/10/25" z={3} zm={2} valignM="top" valign="bottom">
+      <Accordion large={true} items={[
+        {
+          "title": "📋 CONTINUOUS RESEARCH",
+          "html": "<p>Research is too important to leave to chance, so I treat it as a ritual, not an event. I run it continuously, and I augment it with AI agents to cover more ground faster, surfacing the 3 C's of customer, competitor, and company so I always have an up-to-date mental model of what's actually going on, not what I assumed last quarter.</p><p>Good research is also a team sport. A single perspective creates blind spots, even a sharp one, so I pull as many people as possible into the gathering process. The more vantage points feeding the picture, the fewer assumptions slip through unchecked.</p>"
+        },
+        {
+          "title": "📈 AI EXPERIMENTATION",
+          "html": "<p>Even well-researched designs can fail if you never test the theory behind them. In design, everything is an assumption until it's in front of a real customer. AI has changed how cheap and fast that testing can be: I can take a hypothesis from sketch to working prototype in a fraction of the time it used to take, which means I can put ideas in front of customers early and often, even before a design feels \"finished.\"</p><p>I bring an analytical, scientific approach to that process, testing concepts for viability, feasibility, desirability, and usability rather than relying on instinct alone. The faster the feedback loop, the faster the bad assumptions get caught and the good ones get sharpened.</p>"
+        },
+        {
+          "title": "🗺️ STRATEGIC ALIGNMENT",
+          "html": "<p>Sometimes alignment means designing a strategy from scratch. Other times it means sharpening the reach of one that already exists. Either way, it starts with the same foundation as everything else I do: the continuous research and rapid experimentation above don't just inform individual designs, they compound into insights that can guide an entire company's direction.</p><p>A good strategy works like a high-level theory of the world, but a theory nobody understands is useless. I use design to make strategy tangible: visible, concrete, and easy to act on, because the biggest reason strategies fail isn't bad thinking, it's bad communication. Any team can benefit from a strategy, but only if everyone actually gets it.</p><p>That's why I build strategy collaboratively rather than handing it down. It's hard to ignore a strategy you helped create.</p>"
+        }
+      ]} />
+    </Block>
+  </Section>
+
+  <Section theme="white" height={0} rows={{ mobile: 17, desktop: 16, scale: 0.0215 }}>
+    <Block m="1/1/2/11" d="1/1/2/27" z={7} zm={6}>
+      <hr />
+    </Block>
+
+    <Block m="3/2/9/10" d="4/7/14/13" z={6} zm={5}>
+      <a class="img-link" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6918133098740109312"><Img src="/images/26f8e482-499e-401a-83fb-c8fd062432b3/Jeffs_Newsletter-small.gif" alt="Jeff&#x27;s Newsletter" fit="cover" width={1080} height={1080} clip="M0.495,0 A0.505,0.336,0,0,0,0,0.329 V1 H1 V0.329 A0.505,0.336,0,0,0,0.495,0" /></a>
+    </Block>
+
+    <Block m="10/3/12/9" d="5/13/8/21" z={1} zm={2} valignM="top" valign="bottom">
+      <div class="rich text-block">
+        <h2>Jeff’s Newsletter</h2>
+      </div>
+    </Block>
+
+    <Block m="12/3/15/9" d="8/13/10/22" z={3} valignM="top">
+      <div class="rich text-block">
+        <p class="text-large">A monthly advice letter for product makers</p><p>Trusted by 7,000+ subscribers</p>
+      </div>
+    </Block>
+
+    <Block m="15/3/17/9" d="10/13/12/21" z={2} zm={4}>
+      <div class="btn-wrap" style="text-align:left"><a class="btn" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6918133098740109312" target="_blank" rel="noopener">Subscribe on Linkedin</a></div>
+    </Block>
+  </Section>
+</BaseLayout>

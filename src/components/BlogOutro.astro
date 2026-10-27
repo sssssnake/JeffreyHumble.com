@@ -1,0 +1,43 @@
+---
+import Section from "./Section.astro";
+import Block from "./Block.astro";
+import Img from "./Img.astro";
+import Marquee from "./Marquee.astro";
+---
+<Section theme="dark" height="small" rows={{ mobile: 14, desktop: 16, scale: 0.0215 }} bg="/images/799ff0e6-1be1-4203-a07b-a7bbd4d6752d/Star_BG2.png" overlay={0.3}>
+  <Block m="1/2/6/10" d="11/6/15/22" z={2} valign="top">
+    <div class="rich text-block">
+      <h3 class="center">Jeff’s Articles on the Fountain Institute Blog</h3><p class="center">Jeff has written and created imagery for 45+ articles about advanced UX and product skills on the Fountain Institute blog.</p>
+    </div>
+  </Block>
+
+  <Block m="6/2/12/10" d="2/10/10/18" z={1}>
+    <a class="img-link" href="https://www.thefountaininstitute.com/blog?author=54a0cc94e4b038053fed4325" target="_blank" rel="noopener"><Img src="/images/d46cf73f-f9cd-42ac-8521-e4eda14d31bf/Fountain_Institute_Blog.jpg" alt="Screenshot of The Fountain Institute Blog homepage, featuring a black background with white and yellow text, a search bar, navigation links, and thumbnails of various educational or research-related content." fit="contain" width={2319} height={1224} /></a>
+  </Block>
+
+  <Block m="12/2/15/10" d="15/8/17/20" z={3} valignM="middle" valign="bottom">
+    <div class="btn-wrap" style="text-align:center"><a class="btn" href="https://www.thefountaininstitute.com/blog?author=54a0cc94e4b038053fed4325" target="_blank" rel="noopener">See Jeff&#x27;s Articles on The Fountain Institute</a></div>
+  </Block>
+</Section>
+
+<Section theme="white" height={0} rows={{ mobile: 16, desktop: 14, scale: 0.0215 }}>
+  <Block m="2/2/8/10" d="3/7/13/13" z={6} zm={5}>
+    <a class="img-link" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6918133098740109312"><Img src="/images/26f8e482-499e-401a-83fb-c8fd062432b3/Jeffs_Newsletter-small.gif" alt="Jeff&#x27;s Newsletter" fit="cover" width={1080} height={1080} clip="M0.495,0 A0.505,0.336,0,0,0,0,0.329 V1 H1 V0.329 A0.505,0.336,0,0,0,0.495,0" /></a>
+  </Block>
+
+  <Block m="9/3/11/9" d="5/13/8/21" z={1} zm={2} valignM="top" valign="bottom">
+    <div class="rich text-block">
+      <h2>Jeff’s Newsletter</h2>
+    </div>
+  </Block>
+
+  <Block m="11/3/14/9" d="8/13/10/22" z={3} valignM="top">
+    <div class="rich text-block">
+      <p class="text-large">A monthly advice letter for product makers</p><p>Trusted by 7,000+ subscribers</p>
+    </div>
+  </Block>
+
+  <Block m="14/3/16/9" d="10/13/12/21" z={2} zm={4}>
+    <div class="btn-wrap" style="text-align:left"><a class="btn" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6918133098740109312" target="_blank" rel="noopener">Subscribe on Linkedin</a></div>
+  </Block>
+</Section>

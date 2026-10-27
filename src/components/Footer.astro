@@ -1,0 +1,66 @@
+---
+import { footerColumns, social } from "../data/site";
+import SocialIcons from "./SocialIcons.astro";
+import ContactForm from "./ContactForm.astro";
+const year = new Date().getFullYear();
+---
+<footer class="site-footer theme-black">
+  <div class="grid">
+    {footerColumns.map((col) => (
+      <div class="col">
+        <h4>{col.title}</h4>
+        <ul>
+          {col.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+    ))}
+    <div class="col form-col">
+      <h4>Message Jeff</h4>
+      <ContactForm
+        name="footer-message"
+        theme="dark"
+        fields={[
+          { name: "name", label: "Name", type: "name", required: true },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "message", label: "Message", type: "textarea", required: true },
+        ]}
+      />
+    </div>
+  </div>
+  <div class="bottom">
+    <a href="/" class="logo"><img src="/images/1b091acd-e83a-46e0-91e4-0600cbb6b59d/Jeff_Humble_logo-cutout-white.png" alt="Jeff Humble" width="150" height="48" loading="lazy" /></a>
+    <SocialIcons links={social} />
+    <p class="copy">Copyright: Jeff Humble, 2009-{year}・<a href="/privacy-policy">Privacy Policy</a>・<a href="/imprint">Imprint</a></p>
+    <p class="copy">Check out the ✶✶ <a href="https://www.are.na/jeff-humble/jeff-s-utopian-scholastic-archive">are.na board</a> that inspired this utopian scholastic website.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--black) url("/images/b89abb45-9ffb-41ec-b525-be0265be4edc/website_footer.jpg") center bottom / cover no-repeat;
+    padding: 4rem var(--gutter) 3rem;
+    font-size: 0.85rem;
+  }
+  .grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 2.5rem;
+  }
+  h4 { font-family: var(--font-body); font-size: 1rem; margin-bottom: 1.2rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+  .site-footer a { color: var(--white); }
+  .bottom {
+    margin-top: 18rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    text-align: center;
+  }
+  .logo img { height: 48px; width: auto; }
+  .copy { font-size: 0.75rem; opacity: 0.6; margin: 0; }
+  @media (max-width: 767px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .form-col { grid-column: 1 / -1; }
+    .bottom { margin-top: 10rem; }
+  }
+</style>

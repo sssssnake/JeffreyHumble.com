@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogIntro from "../../components/BlogIntro.astro";
+import BlogOutro from "../../components/BlogOutro.astro";
+import PostList from "../../components/PostList.astro";
+import { getPublishedPosts } from "../../lib/posts";
+
+const posts = await getPublishedPosts();
+---
+<BaseLayout title="Blog" description="Read articles about product innovation & strategy by Jeff Humble">
+  <BlogIntro />
+  <PostList posts={posts} />
+  <BlogOutro />
+</BaseLayout>

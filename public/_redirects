@@ -1,0 +1,4 @@
+# Old Squarespace addresses -> new ones (301 = permanent, keeps search ranking)
+/home              /                     301
+/sitemap.xml       /sitemap-index.xml    301
+/blog/             /blog                 301

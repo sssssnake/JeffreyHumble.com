@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import Block from "../components/Block.astro";
+import Img from "../components/Img.astro";
+import Marquee from "../components/Marquee.astro";
+---
+<BaseLayout title="404 | Discover Expert Consulting Now" description="Explore Jeff Humble&#x27;s consulting services, resources, and blog to enhance your strategies. Find helpful content and connect today." noindex>
+  <Section theme="light" height="medium" rows={{ mobile: 16, desktop: 12, scale: 0.0215 }}>
+    <Block m="1/1/7/11" d="1/1/8/27" z={3} zm={4}>
+      <Marquee items={["404"]} textStyle="heading-1" speed={0.5} direction="left" size={8} wave={60} waveFrequency={2} />
+    </Block>
+
+    <Block m="6/2/12/10" d="1/11/9/17" z={4} zm={2}>
+      <Img src="/images/a59de6ac-215b-474c-ba12-7ef75413f064/ezgif-com-optimize-2.gif" alt="Beaver holding a white object in its paws." fit="contain" width={480} height={425} />
+    </Block>
+
+    <Block m="12/2/15/10" d="9/2/11/26" z={3} valignM="top">
+      <div class="rich text-block">
+        <h2 class="center">Oh no! That page vanished like cotton candy in water.</h2>
+      </div>
+    </Block>
+
+    <Block m="15/2/17/10" d="11/10/13/18" z={1}>
+      <div class="btn-wrap" style="text-align:center"><a class="btn" href="/home">Go to Jeff&#x27;s Homepage</a></div>
+    </Block>
+  </Section>
+</BaseLayout>
