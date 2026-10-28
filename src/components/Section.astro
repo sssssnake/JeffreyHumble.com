@@ -14,7 +14,9 @@ interface Props {
   overlay?: number;
   id?: string;
 }
-const { theme = "white", height = "small", rows, bg, bgVideo, overlay = 0, id } = Astro.props;
+const { theme = "white", height = "small", rows, bg, bgVideo, id } = Astro.props;
+// Squarespace darkened background videos by 40%
+const overlay = Astro.props.overlay ?? (bgVideo ? 0.4 : 0);
 const pad = typeof height === "number" ? `${height / 10}vw` : { small: "3.3vw", medium: "6.6vw", large: "10vw" }[height];
 const style = [
   `--pad:${pad}`,
@@ -32,7 +34,7 @@ const style = [
       ) : (
         <img src={bg} alt="" loading="lazy" decoding="async" />
       )}
-      {overlay > 0 && <div class="overlay"></div>}
+      {overlay > 0 && <div class={`overlay ${bgVideo ? "dark" : ""}`}></div>}
     </div>
   )}
   <div class="grid">
@@ -49,7 +51,7 @@ const style = [
   .bg { position: absolute; inset: 0; z-index: 0; }
   .bg img, .bg video { width: 100%; height: 100%; object-fit: cover; }
   .overlay { position: absolute; inset: 0; background: var(--section-bg, #fff); opacity: var(--overlay); }
-  .theme-black .overlay { background: #000; }
+  .theme-black .overlay, .overlay.dark { background: #000; }
   .theme-light .overlay { background: var(--light-bg); }
   .theme-light-bold { background: var(--light-bg); }
 
