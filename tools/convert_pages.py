@@ -441,7 +441,11 @@ def main(pages_dir: str, out_dir: str, scaled_path: str | None = None):
                    'import Section from "../components/Section.astro";',
                    'import Block from "../components/Block.astro";']
         imports += [f'import {u} from "../components/{u}.astro";' for u in sorted(uses)]
-        layout_props = ([] if title == 'Home' else [f'title="{attr(title)}"']) + ([f'description="{attr(desc)}"'] if desc else [])
+        # Astro does not decode entities in attribute strings and escapes them again on output,
+        # so these two props take plain text with only the double quote escaped.
+        def plain(v):
+            return str(v).replace('"', '&quot;')
+        layout_props = ([] if title == 'Home' else [f'title="{plain(title)}"']) + ([f'description="{plain(desc)}"'] if desc else [])
         if dst == '404':
             layout_props.append('noindex')
         page = ('---\n' + '\n'.join(imports) + '\n---\n'

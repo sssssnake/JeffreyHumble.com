@@ -13,8 +13,10 @@ interface Props {
   wave?: number; // intensity 0..100
   waveFrequency?: number;
   href?: string;
+  /** exposes the text as the page's H1 for search engines and screen readers */
+  h1?: boolean;
 }
-const { items, textStyle = "heading-1", size, speed = 0.5, direction = "left", wave = 0, waveFrequency = 4, href } = Astro.props;
+const { items, textStyle = "heading-1", size, speed = 0.5, direction = "left", wave = 0, waveFrequency = 4, href, h1 = false } = Astro.props;
 
 const isHeading = textStyle.startsWith("heading");
 const fallback: Record<string, number> = { "heading-1": 4, "heading-2": 2.8, "heading-3": 2.2, "heading-4": 1.6, "paragraph-1": 1.4, "paragraph-2": 1, "paragraph-3": 0.8 };
@@ -38,6 +40,7 @@ const repeated = Array.from({ length: Math.ceil((W * 3) / (text.length * px * 0.
 const Tag = href ? "a" : "div";
 const shift = Math.round(text.length * px * 0.45);
 ---
+{h1 && <h1 class="vh">{items.join(" ")}</h1>}
 <Tag class={`marquee ${isHeading ? "is-heading" : ""}`} href={href} style={`--size:${rem > 2 ? `max(2rem, min(${rem}rem, ${(rem * 1600) / 1280}vw))` : `${rem}rem`};--dur:${seconds}s`} aria-label={items.join(", ")}>
   {wave > 0 ? (
     <svg class="wave" viewBox={`0 0 ${W} ${H}`} height={H} preserveAspectRatio="xMinYMid slice" aria-hidden="true">
@@ -58,6 +61,7 @@ const shift = Math.round(text.length * px * 0.45);
 </Tag>
 
 <style>
+  .vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .marquee {
     display: block;
     overflow: hidden;

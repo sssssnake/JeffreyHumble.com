@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { site } from "../data/site";
+import { site, social as socialLinks } from "../data/site";
 
 interface Props {
   title?: string;
@@ -20,6 +20,18 @@ const canonical = new URL(
   site.url,
 ).href;
 const imageUrl = new URL(image, site.url).href;
+const siteLd = [
+  { "@context": "https://schema.org", "@type": "WebSite", name: site.name, url: site.url + "/" },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Jeff Humble",
+    url: site.url + "/",
+    jobTitle: "Product strategist and educator",
+    image: imageUrl,
+    sameAs: [...socialLinks.map((s) => s.href).filter((h) => /linkedin|youtube|instagram|twitter|x\.com|github/.test(h))],
+  },
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -31,13 +43,13 @@ const imageUrl = new URL(image, site.url).href;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={title ?? site.name} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content={type} />
     <meta property="og:image" content={imageUrl} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title ?? site.name} />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
@@ -45,6 +57,7 @@ const imageUrl = new URL(image, site.url).href;
     <link rel="icon" href="/images/bc03c314-8f65-4dd6-8b28-9ccfbec47a1f/favicon.ico" media="(prefers-color-scheme: dark)" />
     <link rel="alternate" type="application/rss+xml" title="Jeff Humble's Blog" href="/blog/rss.xml" />
     <link rel="preload" href="/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(siteLd)} />
     <slot name="head" />
   </head>
   <body>
