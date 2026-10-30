@@ -14,7 +14,11 @@ interface Props {
 }
 const { title, description = site.description, image = site.socialImage, type = "website", noindex = false, published } = Astro.props;
 const fullTitle = title && title !== site.name ? `${title} — ${site.name}` : site.name;
-const canonical = new URL(Astro.url.pathname.replace(/\/$/, "") || "/", site.url).href;
+// build.format "file" makes Astro report /about.html and /index.html; the public URLs have neither.
+const canonical = new URL(
+  Astro.url.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "").replace(/\/$/, "") || "/",
+  site.url,
+).href;
 const imageUrl = new URL(image, site.url).href;
 ---
 <!doctype html>
