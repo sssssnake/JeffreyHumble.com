@@ -14,5 +14,7 @@
     // these paths go to the worker first; everything else is served straight from dist
     "run_worker_first": ["/api/*", "/blog"]
   },
+  // lets the worker email you each form submission (needs a domain onboarded in Cloudflare Email Service)
+  "send_email": [{ "name": "EMAIL" }],
   "observability": { "enabled": true }
 }

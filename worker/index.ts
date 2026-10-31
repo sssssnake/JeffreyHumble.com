@@ -7,9 +7,9 @@
 
   Settings (Cloudflare dashboard → this Worker → Settings → Variables and secrets):
     DISCORD_WEBHOOK_URL       (secret)  the webhook URL of the Discord channel
-    RESEND_API_KEY            (secret, optional)  with NOTIFY_EMAIL, also emails every submission via Resend
-    NOTIFY_EMAIL              (secret, optional)  the address that receives those emails
-    FROM_EMAIL                (optional)  sender, e.g. "Site forms <forms@jeffreyhumble.com>"; the domain must be verified in Resend
+    NOTIFY_EMAIL              (optional)  the address that receives an email for every submission;
+                              must be verified in Cloudflare Email Service. Needs the EMAIL binding in wrangler.jsonc
+    FROM_EMAIL                (optional)  sender, e.g. "Site forms <forms@jeffreyhumble.com>"; domain must be onboarded in Email Service
     ACTIVEPIECES_WEBHOOK_URL  (secret, optional)  also forward each submission to an ActivePieces flow
     TURNSTILE_SECRET_KEY      (secret, optional)  turns on Cloudflare's free bot check
 */
@@ -18,7 +18,7 @@ interface Env {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   DISCORD_WEBHOOK_URL?: string;
   ACTIVEPIECES_WEBHOOK_URL?: string;
-  RESEND_API_KEY?: string;
+  EMAIL?: { send: (message: Record<string, unknown>) => Promise<unknown> };
   NOTIFY_EMAIL?: string;
   FROM_EMAIL?: string;
   TURNSTILE_SECRET_KEY?: string;
@@ -83,7 +83,7 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
     fields[key] = value.trim().slice(0, MAX_FIELD);
   }
 
-  const emailOn = Boolean(env.RESEND_API_KEY && env.NOTIFY_EMAIL);
+  const emailOn = Boolean(env.EMAIL && env.NOTIFY_EMAIL);
   if (!env.DISCORD_WEBHOOK_URL && !env.ACTIVEPIECES_WEBHOOK_URL && !emailOn) {
     console.error("No webhook is set; form submission dropped", fields);
     return new Response("Form is not configured", { status: 500 });
@@ -103,11 +103,10 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
   }
   if (emailOn) {
     jobs.push(
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { "content-type": "application/json", authorization: `Bearer ${env.RESEND_API_KEY}` },
-        body: JSON.stringify(emailMessage(fields, env)),
-      }),
+      (async () => {
+        await env.EMAIL!.send(emailMessage(fields, env));
+        return new Response(null, { status: 204 });
+      })(),
     );
   }
   if (env.ACTIVEPIECES_WEBHOOK_URL) {
@@ -182,9 +181,9 @@ function emailMessage(fields: Record<string, string>, env: Env) {
   const text = `${fields.message || "(no message)"}\n\n---\n${rows.join("\n")}`;
   return {
     from: env.FROM_EMAIL || "Site forms <forms@jeffreyhumble.com>",
-    to: [env.NOTIFY_EMAIL],
+    to: env.NOTIFY_EMAIL,
     // Hitting reply in your inbox answers the person who wrote in.
-    reply_to: fields.email,
+    replyTo: fields.email,
     subject: `${name} wrote in on jeffreyhumble.com`,
     text,
     html: `<p style="white-space:pre-wrap">${esc(fields.message || "(no message)")}</p><hr><p style="white-space:pre-wrap;color:#555">${esc(rows.join("\n"))}</p>`,
