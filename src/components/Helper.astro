@@ -1,0 +1,194 @@
+---
+/*
+  Stub, the site's pencil. A small helper in the bottom corner that shows up a few
+  seconds after a page loads, says one line about the page, and goes away when asked.
+  Lines live in the `tips` object in the script below; edit them like any other copy.
+  Stays off blog posts, forms and legal pages, and on a phone-sized screen.
+*/
+---
+<div class="stub" id="stub" hidden>
+  <div class="stub-bubble" id="stub-bubble" role="status" aria-live="polite" hidden>
+    <p class="stub-line" id="stub-line"></p>
+    <div class="stub-actions">
+      <a class="stub-link" id="stub-link" href="/resources" hidden></a>
+      <button type="button" class="stub-btn" id="stub-close">Got it</button>
+      <button type="button" class="stub-btn stub-quiet" id="stub-off">Don't show again</button>
+    </div>
+  </div>
+  <button type="button" class="stub-char" id="stub-char" aria-label="Show a tip from Stub, the pencil" aria-expanded="false">
+    <svg viewBox="0 0 80 120" width="64" height="96" aria-hidden="true" focusable="false">
+      <!-- legs -->
+      <g stroke="#111" stroke-width="3" stroke-linecap="round" fill="none">
+        <path d="M32 100 L30 112" /><path d="M48 100 L50 112" />
+      </g>
+      <ellipse cx="28" cy="114" rx="7" ry="3.5" fill="#111" />
+      <ellipse cx="52" cy="114" rx="7" ry="3.5" fill="#111" />
+      <!-- point and graphite -->
+      <path d="M22 84 L40 104 L58 84 Z" fill="#e8c9a0" stroke="#111" stroke-width="3" stroke-linejoin="round" />
+      <path d="M34 97 L40 104 L46 97 Z" fill="#111" />
+      <!-- body -->
+      <rect x="22" y="26" width="36" height="60" fill="#f4c542" stroke="#111" stroke-width="3" />
+      <path d="M31 26 V86 M49 26 V86" stroke="#d9a91f" stroke-width="2" />
+      <!-- metal band -->
+      <rect x="20" y="16" width="40" height="12" fill="#c9ccd1" stroke="#111" stroke-width="3" />
+      <path d="M20 22 H60" stroke="#111" stroke-width="1.5" />
+      <!-- eraser -->
+      <path d="M22 16 V10 a18 9 0 0 1 36 0 V16 Z" fill="#d54435" stroke="#111" stroke-width="3" stroke-linejoin="round" />
+      <!-- face -->
+      <g class="stub-eyes">
+        <ellipse cx="32" cy="46" rx="5" ry="6" fill="#fff" stroke="#111" stroke-width="2" />
+        <ellipse cx="48" cy="46" rx="5" ry="6" fill="#fff" stroke="#111" stroke-width="2" />
+        <circle class="stub-pupil" cx="33.5" cy="47" r="2.4" fill="#111" />
+        <circle class="stub-pupil" cx="49.5" cy="47" r="2.4" fill="#111" />
+      </g>
+      <path d="M33 62 q7 7 14 0" stroke="#111" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    </svg>
+  </button>
+</div>
+
+<style>
+  .stub {
+    position: fixed;
+    right: clamp(12px, 2vw, 28px);
+    bottom: clamp(12px, 2vw, 24px);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    transform: translateY(140%);
+    transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+  .stub.in { transform: none; }
+  .stub[hidden] { display: none; }
+  .stub-char {
+    all: unset;
+    cursor: pointer;
+    display: block;
+    transform-origin: 50% 100%;
+    animation: stub-bob 3.2s ease-in-out infinite;
+  }
+  .stub-char:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+  .stub-char:hover { animation-duration: 1.4s; }
+  .stub-eyes { animation: stub-blink 5s infinite; transform-origin: 50% 46px; transform-box: fill-box; }
+  .stub-bubble {
+    position: relative;
+    max-width: min(300px, 80vw);
+    padding: 0.8rem 0.95rem 0.7rem;
+    background: var(--white);
+    color: var(--black);
+    border: 2px solid var(--black);
+    border-radius: 14px 14px 4px 14px;
+    box-shadow: 4px 4px 0 var(--black);
+  }
+  .stub-bubble[hidden] { display: none; }
+  .stub-line { margin: 0 0 0.6rem; }
+  .stub-actions { display: flex; flex-wrap: wrap; gap: 0.4rem 0.7rem; align-items: center; }
+  .stub-link { color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .stub-link[hidden] { display: none; }
+  .stub-btn {
+    all: unset;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+    border: 1.5px solid var(--black);
+    border-radius: 999px;
+  }
+  .stub-btn:hover { background: var(--black); color: var(--white); }
+  .stub-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .stub-quiet { border-color: transparent; text-decoration: underline; padding-inline: 0.2rem; }
+  @keyframes stub-bob {
+    0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+    50% { transform: translateY(-4px) rotate(1.5deg); }
+  }
+  @keyframes stub-blink {
+    0%, 94%, 100% { transform: scaleY(1); }
+    97% { transform: scaleY(0.1); }
+  }
+  @media (max-width: 599px), print { .stub { display: none !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    .stub { transition: none; transform: none; }
+    .stub-char, .stub-eyes { animation: none; }
+  }
+</style>
+
+<script>
+  // Lines are keyed by page path. Plain sentences, in Jeff's voice, no pitch.
+  const tips: Record<string, { line: string; href?: string; label?: string }[]> = {
+    "/": [
+      { line: "Hi, I'm Stub. Jeff teaches product skills and builds small tools. The free templates are the fastest way to see what he's about.", href: "/resources", label: "See the free resources" },
+      { line: "If you read one thing here, make it the blog. Jeff writes about strategy and design without the buzzwords.", href: "/blog", label: "Open the blog" },
+    ],
+    "/about": [
+      { line: "Short version: a designer who got curious about how businesses work, and then started one. The rest of the page fills in the story." },
+    ],
+    "/services": [
+      { line: "Wondering what working with Jeff looks like? Write to him with the form at the bottom of the page, and he answers himself." },
+    ],
+    "/resources": [
+      { line: "Everything on this page is free. The Strategy Canvas is a good first pick if you're not sure where to start." },
+    ],
+    "/portfolio": [
+      { line: "Click anything that looks interesting. Most of the projects have a longer story behind them." },
+    ],
+    "/curriculum-vitae": [
+      { line: "That's the full history. If you only have a minute, the About page is shorter.", href: "/about", label: "Go to About" },
+    ],
+    "*": [
+      { line: "Need to reach Jeff? The message form at the bottom of every page goes straight to him." },
+    ],
+  };
+  const skip = [/^\/blog\/.+/, /^\/speaking-requests$/, /^\/privacy-policy$/, /^\/imprint$/, /^\/thanks-for-the-coffee$/, /^\/404$/];
+
+  // build.format "file" makes paths end in .html; the public URLs don't.
+  const path = location.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "").replace(/(.)\/$/, "$1") || "/";
+
+  const store = (kind: "local" | "session") => {
+    try { return kind === "local" ? window.localStorage : window.sessionStorage; } catch { return null; }
+  };
+  const get = (kind: "local" | "session", key: string) => { try { return store(kind)?.getItem(key) ?? null; } catch { return null; } };
+  const set = (kind: "local" | "session", key: string, value: string) => { try { store(kind)?.setItem(key, value); } catch { /* storage can be blocked */ } };
+
+  const root = document.getElementById("stub");
+  if (root && !skip.some((re) => re.test(path)) && get("local", "stub-off") !== "1") {
+    const bubble = document.getElementById("stub-bubble")!;
+    const line = document.getElementById("stub-line")!;
+    const link = document.getElementById("stub-link") as HTMLAnchorElement;
+    const char = document.getElementById("stub-char")!;
+    const options = tips[path] ?? tips["*"];
+    let i = 0;
+
+    const show = () => {
+      const t = options[i % options.length];
+      line.textContent = t.line;
+      if (t.href && t.label) { link.href = t.href; link.textContent = t.label; link.hidden = false; } else { link.hidden = true; }
+      bubble.hidden = false;
+      char.setAttribute("aria-expanded", "true");
+      i++;
+    };
+    const hide = () => { bubble.hidden = true; char.setAttribute("aria-expanded", "false"); };
+
+    const wake = () => {
+      root.hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add("in")));
+      if (get("session", "stub-seen") !== "1") {
+        set("session", "stub-seen", "1");
+        setTimeout(show, 900);
+      }
+    };
+
+    char.addEventListener("click", () => (bubble.hidden ? show() : hide()));
+    document.getElementById("stub-close")!.addEventListener("click", hide);
+    document.getElementById("stub-off")!.addEventListener("click", () => {
+      set("local", "stub-off", "1");
+      root.classList.remove("in");
+      setTimeout(() => (root.hidden = true), 600);
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") hide(); });
+
+    setTimeout(wake, 5000);
+  }
+</script>
