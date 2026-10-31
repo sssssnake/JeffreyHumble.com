@@ -7,6 +7,9 @@
 
   Settings (Cloudflare dashboard → this Worker → Settings → Variables and secrets):
     DISCORD_WEBHOOK_URL       (secret)  the webhook URL of the Discord channel
+    RESEND_API_KEY            (secret, optional)  with NOTIFY_EMAIL, also emails every submission via Resend
+    NOTIFY_EMAIL              (secret, optional)  the address that receives those emails
+    FROM_EMAIL                (optional)  sender, e.g. "Site forms <forms@jeffreyhumble.com>"; the domain must be verified in Resend
     ACTIVEPIECES_WEBHOOK_URL  (secret, optional)  also forward each submission to an ActivePieces flow
     TURNSTILE_SECRET_KEY      (secret, optional)  turns on Cloudflare's free bot check
 */
@@ -15,6 +18,9 @@ interface Env {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   DISCORD_WEBHOOK_URL?: string;
   ACTIVEPIECES_WEBHOOK_URL?: string;
+  RESEND_API_KEY?: string;
+  NOTIFY_EMAIL?: string;
+  FROM_EMAIL?: string;
   TURNSTILE_SECRET_KEY?: string;
 }
 
@@ -77,7 +83,8 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
     fields[key] = value.trim().slice(0, MAX_FIELD);
   }
 
-  if (!env.DISCORD_WEBHOOK_URL && !env.ACTIVEPIECES_WEBHOOK_URL) {
+  const emailOn = Boolean(env.RESEND_API_KEY && env.NOTIFY_EMAIL);
+  if (!env.DISCORD_WEBHOOK_URL && !env.ACTIVEPIECES_WEBHOOK_URL && !emailOn) {
     console.error("No webhook is set; form submission dropped", fields);
     return new Response("Form is not configured", { status: 500 });
   }
@@ -91,6 +98,15 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(discordMessage(fields, submittedAt)),
+      }),
+    );
+  }
+  if (emailOn) {
+    jobs.push(
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: `Bearer ${env.RESEND_API_KEY}` },
+        body: JSON.stringify(emailMessage(fields, env)),
       }),
     );
   }
@@ -153,5 +169,24 @@ function discordMessage(fields: Record<string, string>, submittedAt: string) {
         footer: { text: "jeffreyhumble.com" },
       },
     ],
+  };
+}
+
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+function emailMessage(fields: Record<string, string>, env: Env) {
+  const name = [fields.first_name, fields.last_name].filter(Boolean).join(" ") || fields.name || "Someone";
+  const rows = Object.entries(fields)
+    .filter(([key, value]) => value && key !== "message")
+    .map(([key, value]) => `${LABELS[key] ?? key.replace(/[_-]+/g, " ")}: ${value}`);
+  const text = `${fields.message || "(no message)"}\n\n---\n${rows.join("\n")}`;
+  return {
+    from: env.FROM_EMAIL || "Site forms <forms@jeffreyhumble.com>",
+    to: [env.NOTIFY_EMAIL],
+    // Hitting reply in your inbox answers the person who wrote in.
+    reply_to: fields.email,
+    subject: `${name} wrote in on jeffreyhumble.com`,
+    text,
+    html: `<p style="white-space:pre-wrap">${esc(fields.message || "(no message)")}</p><hr><p style="white-space:pre-wrap;color:#555">${esc(rows.join("\n"))}</p>`,
   };
 }

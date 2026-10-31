@@ -44,6 +44,8 @@ to a Discord channel. Set these in the Cloudflare dashboard (Worker → Settings
 Variables and secrets):
 
 - `DISCORD_WEBHOOK_URL`: the webhook URL of the Discord channel
+- `RESEND_API_KEY` and `NOTIFY_EMAIL` (optional): also email each submission through
+  Resend; `FROM_EMAIL` (optional) sets the sender and must be on a domain verified in Resend
 - `ACTIVEPIECES_WEBHOOK_URL` (optional): also forward each submission to an
   ActivePieces flow
 - `TURNSTILE_SECRET_KEY` (optional) plus `PUBLIC_TURNSTILE_SITE_KEY` as a build
