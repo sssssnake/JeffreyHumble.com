@@ -23,6 +23,9 @@ const fallback: Record<string, number> = { "heading-1": 4, "heading-2": 2.8, "he
 const rem = size ?? fallback[textStyle] ?? 1;
 const px = rem * 16;
 const text = items.join("   ") + "   ";
+// Straight marquees move at a steady pixel speed (about 30px/s at Squarespace's 0.5 setting),
+// measured in the browser so short and long text scroll equally slowly. The CSS duration is a fallback.
+const pps = Math.max(speed, 0.05) * 60;
 const seconds = Math.round(30 / Math.max(speed, 0.05));
 
 // wave geometry in px (the SVG is drawn 1:1 on screen)
@@ -53,12 +56,26 @@ const shift = Math.round(text.length * px * 0.45);
       </text>
     </svg>
   ) : (
-    <div class={`track ${direction}`} aria-hidden="true">
+    <div class={`track ${direction}`} data-pps={pps} aria-hidden="true">
       <span>{text}{text}{text}{text}{text}{text}</span>
       <span>{text}{text}{text}{text}{text}{text}</span>
     </div>
   )}
 </Tag>
+
+<script>
+  const setSpeeds = () => {
+    document.querySelectorAll<HTMLElement>(".marquee .track").forEach((t) => {
+      const pps = Number(t.dataset.pps) || 30;
+      const half = t.scrollWidth / 2;
+      if (half > 0) t.style.animationDuration = `${Math.round(half / pps)}s`;
+    });
+  };
+  setSpeeds();
+  document.fonts?.ready.then(setSpeeds);
+  let t: number | undefined;
+  window.addEventListener("resize", () => { clearTimeout(t); t = window.setTimeout(setSpeeds, 200); });
+</script>
 
 <style>
   .vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -77,6 +94,7 @@ const shift = Math.round(text.length * px * 0.45);
   .track { display: flex; width: max-content; animation: marquee var(--dur) linear infinite; }
   .track.right { animation-direction: reverse; }
   @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .track { animation-play-state: paused; } }
   .wave { display: block; width: 100%; overflow: visible; }
   .wave text { fill: currentColor; font-family: var(--font-heading); }
 </style>

@@ -154,3 +154,15 @@ hr {
 .caption { font-size: var(--fs-small); margin-top: 0.5rem; }
 .social-block :is(ul) { justify-content: center; }
 .rich h1:last-child, .rich h2:last-child, .rich h3:last-child, .rich h4:last-child { margin-bottom: 0; }
+
+
+/* The island on the home page drifts gently, never leaving its frame. */
+.float-island { width: 100%; height: 100%; animation: float-island 14s ease-in-out infinite; will-change: transform; }
+@keyframes float-island {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(1.2%, -2.4%) rotate(1.2deg); }
+  45%  { transform: translate(-1%, -1%) rotate(-0.8deg); }
+  70%  { transform: translate(-1.6%, 1.8%) rotate(0.6deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) { .float-island { animation: none; } }
