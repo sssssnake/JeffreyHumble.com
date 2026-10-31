@@ -46,6 +46,8 @@ Variables and secrets):
 - `DISCORD_WEBHOOK_URL`: the webhook URL of the Discord channel
 - `RESEND_API_KEY` and `NOTIFY_EMAIL` (optional): also email each submission through
   Resend; `FROM_EMAIL` (optional) sets the sender and must be on a domain verified in Resend
+- `SHEET_WEBHOOK_URL` (optional): a Google Apps Script web app that adds each
+  submission to a Sheet and emails the owner. The script is in `docs/form-backup.gs`
 - `ACTIVEPIECES_WEBHOOK_URL` (optional): also forward each submission to an
   ActivePieces flow
 - `TURNSTILE_SECRET_KEY` (optional) plus `PUBLIC_TURNSTILE_SITE_KEY` as a build

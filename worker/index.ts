@@ -10,6 +10,7 @@
     RESEND_API_KEY            (secret, optional)  with NOTIFY_EMAIL, also emails every submission via Resend
     NOTIFY_EMAIL              (secret, optional)  the address that receives those emails
     FROM_EMAIL                (optional)  sender, e.g. "Site forms <onboarding@resend.dev>"; leave unset to use Resend's test sender, which only reaches the address you signed up with; use your own verified domain for anything else
+    SHEET_WEBHOOK_URL         (secret, optional)  Google Apps Script web app that logs each submission to a Sheet and emails you (see README)
     ACTIVEPIECES_WEBHOOK_URL  (secret, optional)  also forward each submission to an ActivePieces flow
     TURNSTILE_SECRET_KEY      (secret, optional)  turns on Cloudflare's free bot check
 */
@@ -17,6 +18,7 @@
 interface Env {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   DISCORD_WEBHOOK_URL?: string;
+  SHEET_WEBHOOK_URL?: string;
   ACTIVEPIECES_WEBHOOK_URL?: string;
   RESEND_API_KEY?: string;
   NOTIFY_EMAIL?: string;
@@ -84,7 +86,7 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
   }
 
   const emailOn = Boolean(env.RESEND_API_KEY && env.NOTIFY_EMAIL);
-  if (!env.DISCORD_WEBHOOK_URL && !env.ACTIVEPIECES_WEBHOOK_URL && !emailOn) {
+  if (!env.DISCORD_WEBHOOK_URL && !env.ACTIVEPIECES_WEBHOOK_URL && !env.SHEET_WEBHOOK_URL && !emailOn) {
     console.error("No webhook is set; form submission dropped", fields);
     return new Response("Form is not configured", { status: 500 });
   }
@@ -107,6 +109,15 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
         method: "POST",
         headers: { "content-type": "application/json", authorization: `Bearer ${env.RESEND_API_KEY}` },
         body: JSON.stringify(emailMessage(fields, env)),
+      }),
+    );
+  }
+  if (env.SHEET_WEBHOOK_URL) {
+    jobs.push(
+      fetch(env.SHEET_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...fields, submittedAt, site: "jeffreyhumble.com" }),
       }),
     );
   }
