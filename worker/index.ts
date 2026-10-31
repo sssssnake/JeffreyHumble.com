@@ -114,11 +114,20 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
   }
   if (env.SHEET_WEBHOOK_URL) {
     jobs.push(
-      fetch(env.SHEET_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...fields, submittedAt, site: "jeffreyhumble.com" }),
-      }),
+      (async () => {
+        const res = await fetch(env.SHEET_WEBHOOK_URL!, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ ...fields, submittedAt, site: "jeffreyhumble.com" }),
+        });
+        // The script answers "ok". Anything else (a Google sign-in page, an error page) means it didn't run.
+        const text = await res.text();
+        if (!res.ok || text.trim() !== "ok") {
+          console.error("Sheet backup did not accept the submission", res.status, text.slice(0, 300));
+          return new Response(null, { status: 502 });
+        }
+        return new Response(null, { status: 204 });
+      })(),
     );
   }
   if (env.ACTIVEPIECES_WEBHOOK_URL) {
