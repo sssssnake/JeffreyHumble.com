@@ -39,11 +39,13 @@ npx wrangler dev   # runs the built site on Cloudflare's runtime, including the 
 
 ## Forms
 
-Forms post to `/api/form`. The worker drops spam and forwards submissions to
-an ActivePieces webhook, which notifies Discord. Set these in the Cloudflare
-dashboard (Worker → Settings → Variables and secrets):
+Forms post to `/api/form`. The worker drops spam and posts submissions straight
+to a Discord channel. Set these in the Cloudflare dashboard (Worker → Settings →
+Variables and secrets):
 
-- `ACTIVEPIECES_WEBHOOK_URL`: the Catch Webhook URL from the ActivePieces flow
+- `DISCORD_WEBHOOK_URL`: the webhook URL of the Discord channel
+- `ACTIVEPIECES_WEBHOOK_URL` (optional): also forward each submission to an
+  ActivePieces flow
 - `TURNSTILE_SECRET_KEY` (optional) plus `PUBLIC_TURNSTILE_SITE_KEY` as a build
   variable, to add Cloudflare's free bot check
 

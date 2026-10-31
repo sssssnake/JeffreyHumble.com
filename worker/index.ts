@@ -2,16 +2,18 @@
   The only server code on the site. Cloudflare serves every page and image as a
   static file; this Worker only runs for /api/* and /blog (see wrangler.jsonc).
 
-  It receives form submissions, drops spam, and forwards the rest to an
-  ActivePieces webhook (which then notifies Discord).
+  It receives form submissions, drops spam, and posts the rest straight to a
+  Discord channel through a Discord webhook.
 
   Settings (Cloudflare dashboard → this Worker → Settings → Variables and secrets):
-    ACTIVEPIECES_WEBHOOK_URL  (secret)  the "Catch Webhook" URL of your ActivePieces flow
+    DISCORD_WEBHOOK_URL       (secret)  the webhook URL of the Discord channel
+    ACTIVEPIECES_WEBHOOK_URL  (secret, optional)  also forward each submission to an ActivePieces flow
     TURNSTILE_SECRET_KEY      (secret, optional)  turns on Cloudflare's free bot check
 */
 
 interface Env {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
+  DISCORD_WEBHOOK_URL?: string;
   ACTIVEPIECES_WEBHOOK_URL?: string;
   TURNSTILE_SECRET_KEY?: string;
 }
@@ -75,19 +77,81 @@ async function handleForm(request: Request, env: Env): Promise<Response> {
     fields[key] = value.trim().slice(0, MAX_FIELD);
   }
 
-  if (!env.ACTIVEPIECES_WEBHOOK_URL) {
-    console.error("ACTIVEPIECES_WEBHOOK_URL is not set; form submission dropped", fields);
+  if (!env.DISCORD_WEBHOOK_URL && !env.ACTIVEPIECES_WEBHOOK_URL) {
+    console.error("No webhook is set; form submission dropped", fields);
     return new Response("Form is not configured", { status: 500 });
   }
 
-  const res = await fetch(env.ACTIVEPIECES_WEBHOOK_URL, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ ...fields, submittedAt: new Date().toISOString(), site: "jeffreyhumble.com" }),
-  });
-  if (!res.ok) {
-    console.error("ActivePieces webhook failed", res.status, await res.text());
-    return new Response("Could not deliver message", { status: 502 });
+  const submittedAt = new Date().toISOString();
+  const jobs: Promise<Response>[] = [];
+
+  if (env.DISCORD_WEBHOOK_URL) {
+    jobs.push(
+      fetch(env.DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(discordMessage(fields, submittedAt)),
+      }),
+    );
   }
+  if (env.ACTIVEPIECES_WEBHOOK_URL) {
+    jobs.push(
+      fetch(env.ACTIVEPIECES_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...fields, submittedAt, site: "jeffreyhumble.com" }),
+      }),
+    );
+  }
+
+  const results = await Promise.allSettled(jobs);
+  const delivered = results.some((r) => r.status === "fulfilled" && r.value.ok);
+  for (const r of results) {
+    if (r.status === "rejected") console.error("Webhook request failed", r.reason);
+    else if (!r.value.ok) console.error("Webhook failed", r.value.status, await r.value.text());
+  }
+  if (!delivered) return new Response("Could not deliver message", { status: 502 });
   return Response.json({ ok: true });
+}
+
+// Labels for the fields we know about; any other field is shown under its own name.
+const LABELS: Record<string, string> = {
+  first_name: "First name",
+  last_name: "Last name",
+  email: "Email",
+  event_date: "Event date",
+  budget: "Budget",
+};
+const SKIP = new Set(["form", "page", "message", "name", "first_name", "last_name", "email"]);
+
+function discordMessage(fields: Record<string, string>, submittedAt: string) {
+  const name = [fields.first_name, fields.last_name].filter(Boolean).join(" ") || fields.name || "Someone";
+  const clip = (text: string, max: number) => (text.length > max ? text.slice(0, max - 1) + "…" : text);
+
+  const extra = Object.entries(fields)
+    .filter(([key, value]) => value && !SKIP.has(key))
+    .map(([key, value]) => ({
+      name: clip(LABELS[key] ?? key.replace(/[_-]+/g, " "), 256),
+      value: clip(value, 1024),
+      inline: true,
+    }));
+
+  return {
+    // No pings, whatever a stranger types into the form.
+    allowed_mentions: { parse: [] },
+    embeds: [
+      {
+        title: clip(`${name} sent a message`, 256),
+        description: clip(fields.message || "(no message)", 4000),
+        color: 0x5865f2,
+        fields: [
+          { name: "Email", value: clip(fields.email, 1024), inline: true },
+          { name: "Form", value: clip(`${fields.form || "unknown"} on ${fields.page || "/"}`, 1024), inline: true },
+          ...extra.slice(0, 20),
+        ],
+        timestamp: submittedAt,
+        footer: { text: "jeffreyhumble.com" },
+      },
+    ],
+  };
 }
