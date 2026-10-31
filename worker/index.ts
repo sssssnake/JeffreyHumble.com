@@ -9,7 +9,7 @@
     DISCORD_WEBHOOK_URL       (secret)  the webhook URL of the Discord channel
     RESEND_API_KEY            (secret, optional)  with NOTIFY_EMAIL, also emails every submission via Resend
     NOTIFY_EMAIL              (secret, optional)  the address that receives those emails
-    FROM_EMAIL                (optional)  sender, e.g. "Site forms <forms@jeffreyhumble.com>"; the domain must be verified in Resend
+    FROM_EMAIL                (optional)  sender, e.g. "Site forms <onboarding@resend.dev>"; leave unset to use Resend's test sender, which only reaches the address you signed up with; use your own verified domain for anything else
     ACTIVEPIECES_WEBHOOK_URL  (secret, optional)  also forward each submission to an ActivePieces flow
     TURNSTILE_SECRET_KEY      (secret, optional)  turns on Cloudflare's free bot check
 */
@@ -181,7 +181,7 @@ function emailMessage(fields: Record<string, string>, env: Env) {
     .map(([key, value]) => `${LABELS[key] ?? key.replace(/[_-]+/g, " ")}: ${value}`);
   const text = `${fields.message || "(no message)"}\n\n---\n${rows.join("\n")}`;
   return {
-    from: env.FROM_EMAIL || "Site forms <forms@jeffreyhumble.com>",
+    from: env.FROM_EMAIL || "Site forms <onboarding@resend.dev>",
     to: [env.NOTIFY_EMAIL],
     // Hitting reply in your inbox answers the person who wrote in.
     reply_to: fields.email,
