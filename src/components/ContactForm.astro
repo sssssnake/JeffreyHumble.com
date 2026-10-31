@@ -1,7 +1,7 @@
 ---
 /*
   A form that posts to /api/form (see worker/index.ts), which checks it for spam
-  and forwards it to the ActivePieces webhook, which pings Discord.
+  and posts it to Discord and the Google Sheet backup.
   `name` tells the automation which form was used.
 */
 export interface Field {
