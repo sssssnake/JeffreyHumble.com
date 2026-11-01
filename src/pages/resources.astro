@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/Section.astro";
 import Block from "../components/Block.astro";
-import ContactForm from "../components/ContactForm.astro";
 import Img from "../components/Img.astro";
 import Marquee from "../components/Marquee.astro";
 import YouTube from "../components/YouTube.astro";
@@ -211,49 +210,6 @@ import YouTube from "../components/YouTube.astro";
       <div class="rich text-block">
         <h3>What is design strategy?</h3><p>Learn the 4 ways that designers can lead through strategy in various roles and positions in an organization.</p><p><em>Talk given online for the Fountain Institute on November 12, 2022</em></p>
       </div>
-    </Block>
-  </Section>
-
-  <Section theme="black" height={0} rows={{ mobile: 21, desktop: 20, scale: 0.0215 }} bgVideo="/media/VUI_talk_clip4.mp4">
-    <Block m="1/2/3/10" d="3/2/5/26" z={4} zm={3} valign="top">
-      <div class="rich text-block">
-        <h2 class="center">Book Jeff for a Talk or Workshop with this Request Form</h2>
-      </div>
-    </Block>
-
-    <Block m="3/2/19/10" d="5/9/21/19" z={3} zm={2} valign="top">
-      <ContactForm name="speaking-request" fields={[
-        {
-          "name": "name",
-          "label": "Name",
-          "type": "name",
-          "required": true
-        },
-        {
-          "name": "email",
-          "label": "Email",
-          "type": "email",
-          "required": true
-        },
-        {
-          "name": "message",
-          "label": "Message",
-          "type": "textarea",
-          "required": true
-        },
-        {
-          "name": "event_date",
-          "label": "Expected date of event",
-          "type": "date",
-          "required": true
-        },
-        {
-          "name": "budget",
-          "label": "Expected budget",
-          "type": "text",
-          "required": true
-        }
-      ]} />
     </Block>
   </Section>
 
